@@ -31,7 +31,7 @@ export default function AdminDashboard() {
             <p className="admin-header__subtitle">Platform management and user oversight</p>
           </div>
           <div className="admin-header__meta">
-            <GlassCard glow style={{padding:'1rem 2rem',display:'flex',gap:'2rem'}}>
+            <GlassCard style={{padding:'1rem 2rem',display:'flex',gap:'2rem'}}>
               <span>Users: <strong>{users.length}</strong></span>
               <span>Active: <strong className="text-green">{activeUsers}</strong></span>
               <span>Bots: <strong>{totalBots}</strong></span>
@@ -40,7 +40,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <GlassCard className="fade-in-up">
+        <GlassCard>
           <div className="dash-panel__header">
             <h3>User Management ({users.length} total)</h3>
             <button className="btn btn--primary" style={{fontSize:'1.1rem',padding:'0.4rem 1.2rem',height:'auto'}} onClick={() => navigate('/flossin-admin')}>Manage All</button>

@@ -10,11 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@deriv-com/smartcharts-champion": "^1.9.19",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tanstack/react-query": "^5.101.4",
     "blockly": "^13.2.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.43.0",
+    "lightweight-charts": "^5.2.0",
     "lucide-react": "^1.27.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-router-dom": "^7.18.2"
+    "react-router-dom": "^7.18.2",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",

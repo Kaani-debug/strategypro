@@ -34,19 +34,19 @@ export default function CopyTrading() {
             </div>
           </div>
 
-          <div className="dash-stats fade-in-up">
+          <div className="dash-stats">
             {[
               { label: 'My Copied Traders', value: '3' },
               { label: 'Total Copied Profit', value: '+$1,247.32', up: true },
               { label: 'Active Copy Trades', value: '5' },
               { label: 'Avg. Win Rate', value: '78.4%', up: true },
             ].map((s, i) => (
-              <GlassCard key={i} glow><div className="dash-stat-card__label">{s.label}</div>
+              <GlassCard key={i}><div className="dash-stat-card__label">{s.label}</div>
                 <div className={`dash-stat-card__value ${s.up ? 'text-green' : ''}`}>{s.value}</div></GlassCard>
             ))}
           </div>
 
-          <GlassCard className="fade-in-up">
+          <GlassCard>
             <div className="dash-panel__header"><h3>Top Traders Leaderboard</h3><span className="vol-panel__status">{connected ? '● Live' : '○ Connecting'}</span></div>
             <table className="dash-table">
               <thead><tr><th>#</th><th>Trader</th><th>Total Profit</th><th>Win Rate</th><th>Trades</th><th>Followers</th><th></th></tr></thead>

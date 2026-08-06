@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Scratch experiments
+experiment-rolldown.mjs
+experiment2.mjs
+public/test-charts.html

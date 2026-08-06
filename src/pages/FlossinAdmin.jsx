@@ -39,22 +39,22 @@ export default function FlossinAdmin() {
           </div>
         </div>
 
-          <div className="dash-grid fade-in-up" style={{gridTemplateColumns:'repeat(3, 1fr)',marginBottom:'2rem'}}>
-          <GlassCard glow style={{padding:'1.6rem',textAlign:'center'}}>
+          <div className="dash-grid" style={{gridTemplateColumns:'repeat(3, 1fr)',marginBottom:'2rem'}}>
+          <GlassCard style={{padding:'1.6rem',textAlign:'center'}}>
             <div style={{fontSize:'2.4rem',fontWeight:700,color:'var(--du-brand-red-coral)'}}>{users.length}</div>
             <div style={{fontSize:'1.2rem',color:'var(--du-text-less-prominent)'}}>Total Users</div>
           </GlassCard>
-          <GlassCard glow style={{padding:'1.6rem',textAlign:'center'}}>
+          <GlassCard style={{padding:'1.6rem',textAlign:'center'}}>
             <div style={{fontSize:'2.4rem',fontWeight:700,color:'var(--du-text-profit-success)'}}>{totalBots}</div>
             <div style={{fontSize:'1.2rem',color:'var(--du-text-less-prominent)'}}>Running Bots</div>
           </GlassCard>
-          <GlassCard glow style={{padding:'1.6rem',textAlign:'center'}}>
+          <GlassCard style={{padding:'1.6rem',textAlign:'center'}}>
             <div style={{fontSize:'2.4rem',fontWeight:700,color:'var(--du-text-profit-success)'}}>${totalProfit.toLocaleString()}</div>
             <div style={{fontSize:'1.2rem',color:'var(--du-text-less-prominent)'}}>Total Profit Generated</div>
           </GlassCard>
         </div>
 
-        <GlassCard className="fade-in-up">
+        <GlassCard>
           <div className="dash-panel__header">
             <div style={{display:'flex',gap:'1rem',alignItems:'center'}}>
               <h3>All Users ({filtered.length})</h3>

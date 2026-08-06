@@ -25,7 +25,7 @@ export default function Login() {
       <Header />
       <main className="app-main">
         <div className="auth-page">
-          <GlassCard glow style={{width:'100%',maxWidth:'440px',padding:'4rem'}}>
+          <GlassCard style={{width:'100%',maxWidth:'440px',padding:'4rem'}}>
             <div className="auth-card__header">
               <div style={{fontSize:'2.4rem',fontWeight:700,marginBottom:'2rem'}}>Strategy<span style={{color:'var(--du-brand-red-coral)'}}>Pro</span></div>
               <div className="auth-modal__tabs" style={{marginBottom:'2rem'}}>
@@ -49,7 +49,7 @@ export default function Login() {
                 <input className="form-input" type="password" placeholder="••••••••" value={form.password} onChange={e => setForm(p => ({...p, password: e.target.value}))} required />
               </div>
               {error && <div className="auth-error">{error}</div>}
-              <button type="submit" className="btn btn--primary auth-form__btn btn--lg glow-btn">
+              <button type="submit" className="btn btn--primary auth-form__btn btn--lg">
                 {tab === 'login' ? 'Sign In' : 'Create Account'}
               </button>
             </form>

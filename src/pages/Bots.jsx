@@ -49,7 +49,7 @@ export default function Bots() {
             <Link to="/dashboard" className="btn btn--outline">Back to Dashboard</Link>
           </div>
 
-          <div className="bots-layout fade-in-up">
+          <div className="bots-layout">
             <GlassCard className="bots-sidebar">
               <h3 className="bots-sidebar__title">Strategies</h3>
               {STRATEGIES.map(s => (
@@ -92,9 +92,9 @@ export default function Bots() {
                 </GlassCard>
               )}
 
-              <div className="bots-controls fade-in-up" style={{display:'flex',gap:'1rem',marginBottom:'2rem'}}>
+              <div className="bots-controls" style={{display:'flex',gap:'1rem',marginBottom:'2rem'}}>
                 {!botRunning ? (
-                  <button className="btn btn--primary btn--lg glow-btn" onClick={handleStart}>▶ Start Bot</button>
+                  <button className="btn btn--primary btn--lg" onClick={handleStart}>▶ Start Bot</button>
                 ) : (
                   <button className="btn btn--outline btn--lg" style={{borderColor:'var(--du-text-loss-danger)',color:'var(--du-text-loss-danger)'}} onClick={stopBot}>⏹ Stop Bot</button>
                 )}

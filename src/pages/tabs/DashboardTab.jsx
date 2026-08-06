@@ -72,11 +72,6 @@ export default function DashboardTab() {
         <span>AI Scanner</span>
       </button>
 
-      {/* Risk Disclaimer */}
-      <div className="dash-risk-disclaimer">
-        <p><strong>Risk Disclaimer:</strong> Derivatives are complex instruments and come with a high risk of losing money rapidly due to leverage. You should consider whether you understand how these products work and whether you can afford to take the high risk of losing your money.</p>
-      </div>
-
       {/* Audio elements */}
       <audio preload="auto" src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACAf39/f4B/f3+AgH+AgH9/f39/f3+AgH+AgH9/gH9/f39/f39/gH+AgH+AgH9/f3+AgH9/f39/f39/f39/f39/f39/f3+AgH9/f39/f4B/f39/f39/f38" />
     </div>

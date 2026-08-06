@@ -31,7 +31,7 @@ export default function MarketAnalysis() {
             </div>
           </div>
 
-          <GlassCard glow className="fade-in-up" style={{marginBottom:'2rem'}}>
+          <GlassCard style={{marginBottom:'2rem'}}>
             <div className="dash-panel__header"><h3>Volatility Indices</h3><span className={`vol-panel__status ${connected ? '' : 'connecting'}`}>{connected ? '● Live' : '○ Connecting'}</span></div>
             <table className="dash-table">
               <thead><tr><th>Symbol</th><th>Price</th><th>Change</th><th>Change %</th><th>Direction</th></tr></thead>
@@ -49,14 +49,14 @@ export default function MarketAnalysis() {
             </table>
           </GlassCard>
 
-          <div className="features__grid fade-in-up">
+          <div className="features__grid">
             {[
               { icon: '📈', title: 'Rise/Fall Analysis', text: 'Analyze price movements to predict rise or fall patterns based on recent tick data.' },
               { icon: '🔢', title: 'Digit Analysis', text: 'Track last digit patterns including even/odd, over/under, and match/differ probabilities.' },
               { icon: '📊', title: 'OHLC Data', text: 'Access Open, High, Low, Close data for detailed technical analysis and charting.' },
               { icon: '📉', title: 'Tick History', text: 'Review historical tick data to backtest strategies and identify trading patterns.' },
             ].map((f, i) => (
-              <GlassCard key={i} glow style={{cursor:'pointer',animationDelay:`${i*0.1}s`}} className="fade-in-up">
+              <GlassCard key={i} style={{cursor:'pointer'}}>
                 <div className="feature-card__icon">{f.icon}</div>
                 <div className="feature-card__title">{f.title}</div>
                 <p className="feature-card__text">{f.text}</p>

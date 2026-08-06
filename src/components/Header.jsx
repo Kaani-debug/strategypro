@@ -24,12 +24,13 @@ export default function Header() {
                     <Link to="/bots" className="header__link">Bots</Link>
                     <Link to="/copy-trading" className="header__link">Copy</Link>
                     <Link to="/market-analysis" className="header__link">Markets</Link>
+                    <Link to="/terminal" className="header__link">Terminal</Link>
                   </>
                 )}
                 {!isApp && location.pathname === '/' && (
                   <>
-                    <a href="/#features" className="header__link">Features</a>
-                    <a href="/#testimonials" className="header__link">Testimonials</a>
+                    <Link to="/#features" className="header__link">Features</Link>
+                    <Link to="/#testimonials" className="header__link">Testimonials</Link>
                   </>
                 )}
                 <ThemeToggle />
@@ -42,7 +43,7 @@ export default function Header() {
             ) : (
               <>
                 {location.pathname === '/' && (
-                  <><a href="/#features" className="header__link">Features</a><a href="/#testimonials" className="header__link">Testimonials</a></>
+                  <><Link to="/#features" className="header__link">Features</Link><Link to="/#testimonials" className="header__link">Testimonials</Link></>
                 )}
                 <ThemeToggle />
                 <button className="btn btn--primary" style={{fontSize:'1.2rem',padding:'0.6rem 1.6rem',height:'auto'}} onClick={() => setAuthOpen(true)}>Sign In</button>

@@ -57,13 +57,13 @@ export default function Dashboard() {
                   </button>
                 ))}
               </div>
-              <Link to="/bots" className="btn btn--primary glow-btn">Create Bot</Link>
+              <Link to="/bots" className="btn btn--primary">Create Bot</Link>
             </div>
           </div>
 
-          <div className="dash-stats fade-in-up">
+          <div className="dash-stats">
             {stats.map((s, i) => (
-              <GlassCard key={i} glow style={{animationDelay: `${i*0.1}s`}} className="fade-in-up">
+              <GlassCard key={i}>
                 <div className="dash-stat-card__label">{s.label}</div>
                 <div className="dash-stat-card__value">{s.value}</div>
                 <div className={`dash-stat-card__change ${s.up ? 'up' : 'down'}`}>{s.change}</div>
@@ -72,7 +72,7 @@ export default function Dashboard() {
           </div>
 
           {activeTab === 'overview' && (
-            <div className="dash-grid fade-in-up">
+            <div className="dash-grid">
               <GlassCard>
                 <div className="dash-panel__header"><h3>Active Bots</h3><Link to="/bots" className="header__link">Manage</Link></div>
                 <div className="bot-list">
@@ -109,7 +109,7 @@ export default function Dashboard() {
           )}
 
           {activeTab === 'trades' && (
-            <GlassCard className="fade-in-up">
+            <GlassCard>
               <div className="dash-panel__header"><h3>Trade History</h3></div>
               <table className="dash-table">
                 <thead><tr><th>Pair</th><th>Type</th><th>Stake</th><th>Profit</th><th>Time</th><th>Status</th></tr></thead>
@@ -128,7 +128,7 @@ export default function Dashboard() {
           )}
 
           {activeTab === 'signals' && (
-            <GlassCard className="fade-in-up">
+            <GlassCard>
               <div className="dash-panel__header"><h3>Live Signals</h3><span className="vol-panel__status">● Live</span></div>
               <table className="dash-table">
                 <thead><tr><th>Signal</th><th>Asset</th><th>Confidence</th><th>Time</th></tr></thead>

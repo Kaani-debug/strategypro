@@ -43,7 +43,7 @@ export default function SuperAdmin() {
           {saved && <div className="text-green" style={{fontWeight:500}}>✓ {saved}</div>}
         </div>
 
-        <div className="dash-grid" style={{gridTemplateColumns:'repeat(3, 1fr)',gap:'2rem'}} className="fade-in-up">
+        <div className="dash-grid" style={{gridTemplateColumns:'repeat(3, 1fr)',gap:'2rem'}}>
           <GlassCard>
             <div className="dash-panel__header"><h3>System Health</h3></div>
             <div style={{padding:'1.6rem'}}>
@@ -100,7 +100,7 @@ export default function SuperAdmin() {
           </GlassCard>
         </div>
 
-        <div className="dash-grid" style={{gridTemplateColumns:'1fr 1fr',gap:'2rem',marginTop:'2rem'}} className="fade-in-up">
+        <div className="dash-grid" style={{gridTemplateColumns:'1fr 1fr',gap:'2rem',marginTop:'2rem'}}>
           <GlassCard>
             <div className="dash-panel__header"><h3>System Registry</h3></div>
             <div style={{padding:'1.6rem'}}>

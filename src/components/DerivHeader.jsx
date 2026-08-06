@@ -1,14 +1,17 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { ChevronDown, ChevronUp, Copy, Plus, LogOut, User, Settings, Bell } from 'lucide-react'
+import { useAnalysisStore, ACCOUNTS } from '../state/analysisStore'
+import { ChevronDown, ChevronUp, LogOut, User, Settings, Bell, CandlestickChart } from 'lucide-react'
+
+const fmtBal = n => `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
 export default function DerivHeader() {
-  const { user, logout } = useAuth()
+  const { logout } = useAuth()
   const [acctOpen, setAcctOpen] = useState(false)
 
-  const balance = user?.balance ?? 15247.32
-  const acctId = user?.acctId || `ROT${String(user?.id || '').replace('U', '').padStart(5, '0') || '91857'}`
-  const demoBalance = 10000
+  const account = useAnalysisStore(s => s.account)
+  const setAccount = useAnalysisStore(s => s.setAccount)
 
   return (
     <header className="deriv-header">
@@ -17,48 +20,52 @@ export default function DerivHeader() {
           <span className="deriv-header__logo-icon">D</span>
           <span className="deriv-header__logo-text">StrategyPro</span>
         </span>
-        <div className="deriv-header__divider" />
-        <div className="deriv-header__acct-switcher" onClick={() => setAcctOpen(!acctOpen)}>
-          <div className="deriv-header__acct-info">
-            <span className="deriv-header__acct-type">Deriv Demo</span>
-            <span className="deriv-header__acct-id">{acctId}</span>
-          </div>
-          <div className="deriv-header__balance">
-            <span className="deriv-header__balance-amount">${balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-            <span className="deriv-header__balance-currency">USD</span>
-          </div>
-          {acctOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        <div className="deriv-header__acct">
+          <button
+            type="button"
+            className={`deriv-header__acct-toggle deriv-header__acct-toggle--${account.type}`}
+            onClick={() => setAcctOpen(!acctOpen)}
+            aria-haspopup="listbox"
+            aria-expanded={acctOpen}
+          >
+            <span className="deriv-header__acct-toggle-name">{account.label}</span>
+            <span className="deriv-header__acct-toggle-balance">
+              {fmtBal(account.balance)} {account.currency}
+            </span>
+            {acctOpen ? <ChevronUp size={14} className="deriv-header__acct-toggle-chevron" /> : <ChevronDown size={14} className="deriv-header__acct-toggle-chevron" />}
+          </button>
+          {acctOpen && (
+            <div className="deriv-header__acct-menu" role="listbox">
+              {ACCOUNTS.map(a => (
+                <button
+                  key={a.type}
+                  type="button"
+                  role="option"
+                  aria-selected={a.type === account.type}
+                  className={`deriv-header__acct-menu-item${a.type === account.type ? ' deriv-header__acct-menu-item--active' : ''}`}
+                  onClick={() => {
+                    setAccount(a.type)
+                    setAcctOpen(false)
+                  }}
+                >
+                  <span className="deriv-header__acct-menu-main">
+                    <span className="deriv-header__acct-menu-name">{a.label}</span>
+                    <span className="deriv-header__acct-menu-id">{a.id}</span>
+                  </span>
+                  <span className={`deriv-header__acct-menu-balance deriv-header__acct-menu-balance--${a.type}`}>
+                    {fmtBal(a.balance)} {a.currency}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-        {acctOpen && (
-          <div className="deriv-header__acct-dropdown">
-            <div className="deriv-header__acct-dropdown-item deriv-header__acct-dropdown-item--active">
-              <div>
-                <div className="deriv-header__acct-dropdown-type">Deriv Demo</div>
-                <div className="deriv-header__acct-dropdown-id">{acctId}</div>
-              </div>
-              <div className="deriv-header__balance">
-                <span className="deriv-header__balance-amount">${balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className="deriv-header__balance-currency">USD</span>
-              </div>
-            </div>
-            <div className="deriv-header__acct-dropdown-item">
-              <div>
-                <div className="deriv-header__acct-dropdown-type">Deriv Demo</div>
-                <div className="deriv-header__acct-dropdown-id">VRTC123456</div>
-              </div>
-              <div className="deriv-header__balance">
-                <span className="deriv-header__balance-amount">${demoBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                <span className="deriv-header__balance-currency">USD</span>
-              </div>
-            </div>
-            <div className="deriv-header__acct-dropdown-footer">
-              <button className="deriv-header__acct-btn"><Plus size={14} /> Add account</button>
-              <button className="deriv-header__acct-btn"><Copy size={14} /> Transfer</button>
-            </div>
-          </div>
-        )}
       </div>
       <div className="deriv-header__right">
+        <Link to="/terminal" className="deriv-header__terminal-link" title="Open Terminal">
+          <CandlestickChart size={18} />
+          <span>Terminal</span>
+        </Link>
         <button className="deriv-header__icon-btn" title="Notifications"><Bell size={18} /></button>
         <button className="deriv-header__icon-btn" title="Settings"><Settings size={18} /></button>
         <div className="deriv-header__divider" />

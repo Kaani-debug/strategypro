@@ -1,7 +1,7 @@
-export default function GlassCard({ children, className = '', glow = false, onClick, style }) {
+export default function GlassCard({ children, className = '', onClick, style }) {
   return (
     <div
-      className={`glass-card ${glow ? 'glass-card--glow' : ''} ${className}`}
+      className={`glass-card ${className}`}
       onClick={onClick}
       style={style}
     >

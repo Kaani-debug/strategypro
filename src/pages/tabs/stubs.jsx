@@ -1,4 +1,4 @@
-import { Boxes, Gauge, Sparkles, Briefcase, Search, MonitorPlay, HandCoins, ChartColumnStacked, Copy, ShieldCheck, GraduationCap, Bot, Rocket, BarChart3, LineChart, TrendingUp, DollarSign, Zap } from 'lucide-react'
+import { Boxes, Gauge, Sparkles, Briefcase, Search, MonitorPlay, HandCoins, ShieldCheck, Bot, Rocket, BarChart3, LineChart, TrendingUp, DollarSign, Zap } from 'lucide-react'
 
 function TabStub({ icon: Icon, title, description, features }) {
   return (
@@ -79,34 +79,24 @@ export function BulkTraderTab() {
     ]} />
 }
 
-export function ChartsTab() {
-  return <TabStub icon={ChartColumnStacked} title="Charts" description="Interactive price charts with advanced tools"
-    features={[
-      { icon: BarChart3, label: 'Candlestick Charts' }, { icon: LineChart, label: 'Line Charts' },
-      { icon: TrendingUp, label: 'Technical Indicators' }, { icon: ChartColumnStacked, label: 'Volume Analysis' },
-    ]} />
-}
+export { default as ChartsTab } from './ChartsTab'
 
-export function CopyTraderTab() {
-  return <TabStub icon={Copy} title="Copy Trader" description="Copy trades from successful traders automatically"
-    features={[
-      { icon: Copy, label: 'Top Traders' }, { icon: TrendingUp, label: 'Performance Stats' },
-      { icon: DollarSign, label: 'Profit Sharing' }, { icon: BarChart3, label: 'Risk Ratings' },
-    ]} />
-}
+export { default as CopyTraderTab } from './CopyTrader'
 
 export function RiskCalculatorTab() {
-  return <TabStub icon={ShieldCheck} title="Risk Calculator" description="Calculate and manage your trading risk"
-    features={[
-      { icon: ShieldCheck, label: 'Risk Assessment' }, { icon: DollarSign, label: 'Position Sizing' },
-      { icon: TrendingUp, label: 'Risk/Reward Ratio' }, { icon: BarChart3, label: 'Scenario Analysis' },
-    ]} />
+  return (
+    <div className="tab-content" style={{ maxWidth: '100%', textAlign: 'left', padding: '0' }}>
+      <iframe
+        src="https://risk.binarytool.site/"
+        title="Risk Calculator"
+        style={{
+          width: '100%',
+          height: 'calc(100vh - 22rem)',
+          border: 'none',
+        }}
+      />
+    </div>
+  )
 }
 
-export function TradeAcademyTab() {
-  return <TabStub icon={GraduationCap} title="Trade Academy" description="Learn trading with structured courses and guides"
-    features={[
-      { icon: GraduationCap, label: 'Beginner Guides' }, { icon: BarChart3, label: 'Video Tutorials' },
-      { icon: TrendingUp, label: 'Strategy Guides' }, { icon: ShieldCheck, label: 'Risk Management' },
-    ]} />
-}
+export { default as TradeAcademyTab } from './TradeAcademy'

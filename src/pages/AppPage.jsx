@@ -1,10 +1,13 @@
-import { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useState, useEffect } from 'react'
 import DerivHeader from '../components/DerivHeader'
 import AppFooter from '../components/AppFooter'
+import BotControlBar from '../components/BotControlBar'
+import TradeResultsPanel from '../components/results/TradeResultsPanel'
+import { useSessionStore } from '../state/sessionStore'
 import DashboardTab from './tabs/DashboardTab'
 import BotBuilderTab from './tabs/BotBuilderTab'
-import { FreeBotsTab, SpeedbotTab, AISoftwareTab, AutoTraderTab, AnalysisToolTab, ManualTraderTab, BulkTraderTab, ChartsTab, CopyTraderTab, RiskCalculatorTab, TradeAcademyTab } from './tabs/stubs'
+import AnalysisToolTab from './tabs/AnalysisTool'
+import { FreeBotsTab, SpeedbotTab, AISoftwareTab, AutoTraderTab, ManualTraderTab, BulkTraderTab, ChartsTab, CopyTraderTab, RiskCalculatorTab, TradeAcademyTab } from './tabs/stubs'
 import { House, Bot, Boxes, Gauge, Sparkles, Briefcase, Search, MonitorPlay, HandCoins, ChartColumnStacked, Copy, ShieldCheck, GraduationCap } from 'lucide-react'
 
 const TABS = [
@@ -24,8 +27,9 @@ const TABS = [
 ]
 
 export default function AppPage() {
-  const { user } = useAuth()
-  const [activeTab, setActiveTab] = useState('dashboard')
+  const [activeTab, setActiveTab] = useState('analysis-tool')
+
+  useEffect(() => () => useSessionStore.getState().dispose(), [])
 
   const ActiveComponent = TABS.find(t => t.id === activeTab)?.component || DashboardTab
 
@@ -54,7 +58,10 @@ export default function AppPage() {
         <ActiveComponent />
       </main>
 
+      <BotControlBar />
       <AppFooter />
+
+      <TradeResultsPanel />
     </div>
   )
 }
