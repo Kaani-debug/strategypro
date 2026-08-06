@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function Callback() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const [status, setStatus] = useState('Authenticating...')
 
   useEffect(() => {
@@ -14,13 +15,13 @@ export default function Callback() {
     if (token) {
       localStorage.setItem('auth_token', token)
       setStatus('Authentication successful! Redirecting...')
-      setTimeout(() => { window.location.href = '/app' }, 1500)
+      setTimeout(() => { navigate('/app') }, 1500)
     } else if (code) {
       setStatus('Authorization code received. Exchanging for token...')
-      setTimeout(() => { window.location.href = '/app' }, 2000)
+      setTimeout(() => { navigate('/app') }, 2000)
     } else {
       setStatus('No authentication data received. Redirecting to login...')
-      setTimeout(() => { window.location.href = '/login' }, 2000)
+      setTimeout(() => { navigate('/login') }, 2000)
     }
   }, [searchParams])
 
