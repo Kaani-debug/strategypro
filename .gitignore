@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 dist
 !public/dist/
+public/dist/*
+!public/dist/smartcharts.css
 dist-ssr
 *.local
 
