@@ -665,7 +665,7 @@
 
 .tr-tx__grid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
   align-items: center;
   gap: 0.6rem;
   padding: 0 1rem;
@@ -729,6 +729,26 @@
   margin-right: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.3px;
+}
+
+.tr-tx__digits {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.tr-tx__digit-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--du-text-profit-success);
+  background: color-mix(in srgb, var(--du-text-profit-success) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--du-text-profit-success) 25%, transparent);
+  border-radius: 5px;
+  font-variant-numeric: tabular-nums;
 }
 
 .tr-tx__amount {
@@ -1152,6 +1172,37 @@
   color: var(--du-text-general);
 }
 
+.tr-detail__entrypoints {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+.tr-detail__entrypoints-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--du-text-less-prominent);
+  white-space: nowrap;
+}
+.tr-detail__entrypoints-chips {
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.tr-detail__entrypoint-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--du-text-profit-success);
+  background: color-mix(in srgb, var(--du-text-profit-success) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--du-text-profit-success) 30%, transparent);
+  border-radius: 7px;
+  font-variant-numeric: tabular-nums;
+}
+
 .tr-detail__ai {
   margin-top: 0.8rem;
   background: color-mix(in srgb, var(--du-violet) 9%, transparent);
@@ -1224,6 +1275,35 @@
 .tr-result--win .tr-result__status { color: var(--du-text-profit-success); }
 .tr-result--loss .tr-result__status { color: var(--du-text-loss-danger); }
 .tr-result__detail { font-size: 1.15rem; color: var(--du-text-less-prominent); margin-top: 0.3rem; }
+.tr-result__digits {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+.tr-result__digits-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--du-text-less-prominent);
+}
+.tr-result__digits-chips {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+.tr-result__digit-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--du-text-profit-success);
+  background: color-mix(in srgb, var(--du-text-profit-success) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--du-text-profit-success) 30%, transparent);
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
 .tr-result__pnl {
   font-size: 2.1rem;
   font-weight: 700;

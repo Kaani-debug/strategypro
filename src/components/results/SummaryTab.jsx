@@ -41,6 +41,16 @@ function ResultCard({ trade }) {
         <div className="tr-result__detail">
           {trade.contractType} · {trade.symbol} · {fmtTime(trade.exitTime || trade.entryTime)}
         </div>
+        {trade.entryPoints && trade.entryPoints.length > 0 && (
+          <div className="tr-result__digits">
+            <span className="tr-result__digits-label">Entry Points</span>
+            <span className="tr-result__digits-chips">
+              {trade.entryPoints.map(d => (
+                <span key={d} className="tr-result__digit-chip">{d}</span>
+              ))}
+            </span>
+          </div>
+        )}
       </div>
       <div className="tr-result__pnl">{won ? '+' : ''}{fmtMoney(pnl)}</div>
     </div>

@@ -142,6 +142,13 @@ const makeTrade = session => {
   const drift = entrySpot * rnd(0.001, 0.004)
   const exitSpot = round(signal.direction === 'Rise' ? entrySpot + drift : entrySpot - drift)
   const now = Date.now()
+  const digitPool = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  for (let i = digitPool.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[digitPool[i], digitPool[j]] = [digitPool[j], digitPool[i]]
+  }
+  const entryPoints = digitPool.slice(0, 3)
+
   return {
     id: makeId('T-'),
     sessionId: session.id,
@@ -161,6 +168,7 @@ const makeTrade = session => {
     duration,
     latencyMs: openLatencyMs + settleLatencyMs,
     signal,
+    entryPoints,
     execution: {
       signalAt: now,
       openedAt: null,

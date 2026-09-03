@@ -138,6 +138,16 @@ export default function TradeDetailView({ trade, onClose }) {
               <span className="tr-detail__kv"><b>Risk / Reward</b>1:{riskReward.toFixed(2)}</span>
               <span className="tr-detail__kv"><b>Duration</b>{fmtDuration(trade.duration)}</span>
             </div>
+            {trade.entryPoints && trade.entryPoints.length > 0 && (
+              <div className="tr-detail__entrypoints">
+                <span className="tr-detail__entrypoints-label">Suggested Entry Points</span>
+                <span className="tr-detail__entrypoints-chips">
+                  {trade.entryPoints.map(d => (
+                    <span key={d} className="tr-detail__entrypoint-chip">{d}</span>
+                  ))}
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="tr-detail__section">

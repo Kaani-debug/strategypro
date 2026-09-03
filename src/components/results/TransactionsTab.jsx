@@ -83,6 +83,7 @@ export default function TransactionsTab() {
             <div className="tr-tx__grid tr-tx__head">
               <span>Trade ID</span>
               <span>Entry / Exit</span>
+              <span>Entry Digits</span>
               <span>Amount</span>
               <span>Status</span>
             </div>
@@ -104,6 +105,11 @@ export default function TransactionsTab() {
                   <span className="tr-tx__spots">
                     <span className="tr-tx__spot"><span className="tr-tx__spot-key">Entry</span>{t.entrySpot.toFixed(2)}</span>
                     <span className="tr-tx__spot tr-tx__spot--exit"><span className="tr-tx__spot-key">Exit</span>{t.exitSpot.toFixed(2)}</span>
+                  </span>
+                  <span className="tr-tx__digits">
+                    {t.entryPoints && t.entryPoints.length > 0
+                      ? t.entryPoints.map(d => <span key={d} className="tr-tx__digit-chip">{d}</span>)
+                      : '—'}
                   </span>
                   <span className={`tr-tx__amount ${pnlClass(t.profit)}`}>{t.status === 'open' ? '…' : fmtSignedMoney(t.profit)}</span>
                   <span className="tr-tx__status">
