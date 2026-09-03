@@ -111,6 +111,10 @@ function analyze(market) {
   const parity = lastDigit % 2 === 0 ? 'Even' : 'Odd'
   const distPct = +((Math.abs(last - market.base) / market.base) * 100).toFixed(2)
 
+  const digits = h.map(p => Math.floor(Math.abs(p)) % 10)
+  const evens = digits.filter(d => d % 2 === 0).length
+  const evenPct = digits.length ? +((evens / digits.length) * 100).toFixed(1) : 50
+
   const patterns = []
   const categories = []
   if (streak >= 3) {
@@ -161,15 +165,33 @@ function analyze(market) {
   const isQualifying = score >= 60
 
   const MULTI_DIGIT_TYPES = ['even', 'odd', 'over', 'under', 'matches', 'differs']
+  const EVEN_ODD_TYPES = ['even', 'odd']
   const tradeTypes = ['rise', 'fall', 'even', 'odd', 'over', 'under', 'matches', 'differs', 'digit']
-  const tradeType = tradeTypes[Math.floor(Math.random() * tradeTypes.length)]
+  let tradeType = tradeTypes[Math.floor(Math.random() * tradeTypes.length)]
 
-  let entryPoints
-  if (isQualifying && MULTI_DIGIT_TYPES.includes(tradeType)) {
+  const preferredParity = evenPct >= 50 ? 'even' : 'odd'
+  const isEvenAdvice = preferredParity === 'even'
+
+  if (EVEN_ODD_TYPES.includes(tradeType)) {
+    tradeType = preferredParity
+  }
+
+  const shufflePool = () => {
     const pool = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     for (let i = pool.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1))
       ;[pool[i], pool[j]] = [pool[j], pool[i]]
+    }
+    return pool
+  }
+
+  let entryPoints
+  if (isQualifying && MULTI_DIGIT_TYPES.includes(tradeType)) {
+    let pool = shufflePool()
+    if (EVEN_ODD_TYPES.includes(tradeType)) {
+      const filtered = pool.filter(d => (tradeType === 'even' ? d % 2 === 0 : d % 2 === 1))
+      const rest = pool.filter(d => (tradeType === 'even' ? d % 2 === 1 : d % 2 === 0))
+      pool = [...filtered, ...rest]
     }
     entryPoints = pool.slice(0, 3)
   } else {
@@ -192,7 +214,11 @@ function analyze(market) {
   else body.push('Scan conditions are neutral; wait for clearer alignment.')
   if (isQualifying) {
     const digitsLabel = entryPoints.join(', ')
-    body.push(`Qualifying opportunity detected — suggested entry point digit${entryPoints.length > 1 ? 's' : ''}: ${digitsLabel} (${tradeType} trade).`)
+    let tradeAdvice = `Qualifying opportunity detected — suggested entry point digit${entryPoints.length > 1 ? 's' : ''}: ${digitsLabel} (${tradeType} trade).`
+    if (EVEN_ODD_TYPES.includes(tradeType)) {
+      tradeAdvice = `Digit analysis favours ${tradeType} — ${evenPct}% of recent prints were even. Suggested ${tradeType} entry points: ${digitsLabel}.`
+    }
+    body.push(tradeAdvice)
   }
   reasoning = body.join(' ')
 
@@ -217,6 +243,8 @@ function analyze(market) {
     entryPoints,
     tradeType,
     isQualifying,
+    evenPct,
+    isEvenAdvice,
   }
 }
 
@@ -391,7 +419,7 @@ export default function AnalysisToolScanner() {
 }
 
 function MarketCard({ market, analysis, watched, onToggleWatch, onAnalyze, onTrade }) {
-  const { changePct, dir, score, signal, patterns, rsi, streak, lastDigit, volPct, momentumPct, categories, entryPoints, tradeType, isQualifying } = analysis
+  const { changePct, dir, score, signal, patterns, rsi, streak, lastDigit, volPct, momentumPct, categories, entryPoints, tradeType, isQualifying, evenPct } = analysis
   const icon = categories.includes('volatility') ? <Waves size={14} /> : categories.includes('momentum') ? <Zap size={14} /> : <Gauge size={14} />
 
   return (
@@ -465,14 +493,22 @@ function MarketCard({ market, analysis, watched, onToggleWatch, onAnalyze, onTra
       </div>
 
       {isQualifying && (
-        <div className="at-scan-entry">
-          <span className="at-scan-entry__label">Entry Point{entryPoints.length > 1 ? 's' : ''}</span>
+        <div className={`at-scan-entry ${tradeType === 'even' || tradeType === 'odd' ? 'at-scan-entry--parity' : ''}`}>
+          <span className="at-scan-entry__label">
+            {tradeType === 'even' || tradeType === 'odd'
+              ? (tradeType === 'even' ? 'Even Entry Points' : 'Odd Entry Points')
+              : `Entry Point${entryPoints.length > 1 ? 's' : ''}`}
+          </span>
           <span className="at-scan-entry__digits">
             {entryPoints.map(d => (
-              <span key={d} className="at-scan-entry__digit">{d}</span>
+              <span key={d} className={`at-scan-entry__digit ${tradeType === 'even' || tradeType === 'odd' ? `at-scan-entry__digit--${tradeType}` : ''}`}>{d}</span>
             ))}
           </span>
-          <span className="at-scan-entry__type">{tradeType}</span>
+          {tradeType === 'even' || tradeType === 'odd' ? (
+            <span className="at-scan-entry__type">{tradeType} · {evenPct}%</span>
+          ) : (
+            <span className="at-scan-entry__type">{tradeType}</span>
+          )}
         </div>
       )}
 
@@ -499,7 +535,7 @@ function ScannerModal({ marketId, results, watched, onToggleWatch, onTrade, onCl
   const result = results.find(r => r.market.id === marketId)
   if (!result) return null
   const { market, ...a } = result
-  const { changePct, dir, signal, patterns, rsi, streak, streakDir, lastDigit, parity, volPct, momentumPct, distPct, reasoning, entryPoints, tradeType, isQualifying } = a
+  const { changePct, dir, signal, patterns, rsi, streak, streakDir, lastDigit, parity, volPct, momentumPct, distPct, reasoning, entryPoints, tradeType, isQualifying, evenPct } = a
 
   return (
     <div className="at-modal-overlay" onClick={onClose}>
@@ -548,15 +584,19 @@ function ScannerModal({ marketId, results, watched, onToggleWatch, onTrade, onCl
             {isQualifying && (
               <>
                 <div className="at-scan-detail__cell at-scan-detail__cell--entry">
-                  <span>Entry Point{entryPoints.length > 1 ? 's' : ''}</span>
+                  <span>
+                    {tradeType === 'even' || tradeType === 'odd'
+                      ? `${tradeType === 'even' ? 'Even' : 'Odd'} Entry Points`
+                      : `Entry Point${entryPoints.length > 1 ? 's' : ''}`}
+                  </span>
                   <b className="at-scan-entry__digits at-scan-entry__digits--modal">
                     {entryPoints.map(d => (
-                      <span key={d} className="at-scan-entry__digit--modal">{d}</span>
+                      <span key={d} className={`at-scan-entry__digit--modal ${tradeType === 'even' || tradeType === 'odd' ? `at-scan-entry__digit--${tradeType}` : ''}`}>{d}</span>
                     ))}
                   </b>
                 </div>
                 <div className="at-scan-detail__cell">
-                  <span>Trade Type</span><b>{tradeType}</b>
+                  <span>Trade Type</span><b>{tradeType}{tradeType === 'even' || tradeType === 'odd' ? ` · ${evenPct}% even` : ''}</b>
                 </div>
               </>
             )}

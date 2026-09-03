@@ -4399,6 +4399,41 @@ select.form-input {
 .theme--dark .at-scan-entry__digits--modal .at-scan-entry__digit--modal {
   background: rgba(64, 189, 139, 0.1);
 }
+.at-scan-card__head-actions .at-scan-badge.at-scan-badge--even,
+.at-scan-entry__digit--even,
+.at-scan-entry__digit--modal.at-scan-entry__digit--even {
+  color: var(--du-violet);
+  border-color: var(--du-violet);
+}
+.at-scan-entry__digit--odd,
+.at-scan-entry__digit--modal.at-scan-entry__digit--odd {
+  color: var(--du-blue);
+  border-color: var(--du-blue);
+}
+.theme--dark .at-scan-entry__digit--modal.at-scan-entry__digit--even { background: color-mix(in srgb, var(--du-violet) 14%, transparent); }
+.theme--dark .at-scan-entry__digit--modal.at-scan-entry__digit--odd { background: color-mix(in srgb, var(--du-blue) 14%, transparent); }
+.at-scan-entry--parity .at-scan-entry__digit--even,
+.at-scan-entry--parity .at-scan-entry__digit--modal.at-scan-entry__digit--even {
+  border-color: var(--du-violet);
+  color: var(--du-violet);
+}
+.at-scan-entry--parity .at-scan-entry__digit--odd,
+.at-scan-entry--parity .at-scan-entry__digit--modal.at-scan-entry__digit--odd {
+  border-color: var(--du-blue);
+  color: var(--du-blue);
+}
+.at-scan-entry--parity .at-scan-entry__type {
+  color: var(--du-violet);
+  background: color-mix(in srgb, var(--du-violet) 12%, transparent);
+}
+.at-scan-detail__cell--entry .at-scan-entry__digit--modal.at-scan-entry__digit--even {
+  border-color: var(--du-violet);
+  color: var(--du-violet);
+}
+.at-scan-detail__cell--entry .at-scan-entry__digit--modal.at-scan-entry__digit--odd {
+  border-color: var(--du-blue);
+  color: var(--du-blue);
+}
 .at-scan-detail__cell--entry {
   border-color: var(--du-text-profit-success) !important;
   background: rgba(12, 122, 82, 0.08);
