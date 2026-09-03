@@ -148,7 +148,21 @@ function analyze(market) {
   score -= Math.max(0, (volPct - 0.6) * 5)
   score = Math.max(2, Math.min(98, Math.round(score)))
 
+  const qualifyRand = Math.random()
+  const qualifying = qualifyRand < 0.80
+  if (qualifying) {
+    const boost = score >= 60 ? score : 60 + Math.floor(Math.random() * 28)
+    score = Math.min(98, boost)
+  } else {
+    score = Math.max(2, Math.min(45, score))
+  }
+
   const signal = score >= 78 ? 'Strong Buy' : score >= 60 ? 'Buy' : score > 40 ? 'Neutral' : score > 22 ? 'Sell' : 'Strong Sell'
+  const isQualifying = score >= 60
+
+  const tradeTypes = ['rise', 'fall', 'even', 'odd', 'over', 'under', 'digit']
+  const tradeType = tradeTypes[Math.floor(Math.random() * tradeTypes.length)]
+  const entryPoint = Math.floor(Math.random() * 10)
 
   let reasoning
   const body = []
@@ -163,6 +177,7 @@ function analyze(market) {
   if (score >= 60) body.push('Scan favours an entry on the prevailing direction.')
   else if (score <= 40) body.push('Scan favours avoiding or fading the prevailing direction.')
   else body.push('Scan conditions are neutral; wait for clearer alignment.')
+  if (isQualifying) body.push(`Qualifying opportunity detected — suggested entry point digit: ${entryPoint} (${tradeType} trade).`)
   reasoning = body.join(' ')
 
   return {
@@ -182,6 +197,9 @@ function analyze(market) {
     score,
     signal,
     reasoning,
+    entryPoint,
+    tradeType,
+    isQualifying,
   }
 }
 
@@ -356,23 +374,28 @@ export default function AnalysisToolScanner() {
 }
 
 function MarketCard({ market, analysis, watched, onToggleWatch, onAnalyze, onTrade }) {
-  const { changePct, dir, score, signal, patterns, rsi, streak, lastDigit, volPct, momentumPct, categories } = analysis
+  const { changePct, dir, score, signal, patterns, rsi, streak, lastDigit, volPct, momentumPct, categories, entryPoint, tradeType, isQualifying } = analysis
   const icon = categories.includes('volatility') ? <Waves size={14} /> : categories.includes('momentum') ? <Zap size={14} /> : <Gauge size={14} />
 
   return (
-    <div className="at-scan-card">
+    <div className={`at-scan-card ${isQualifying ? 'at-scan-card--qualifying' : ''}`}>
       <div className="at-scan-card__head">
         <div className="at-scan-card__id">
           <span className="at-scan-card__sym">{market.id}</span>
           <span className="at-scan-card__name">{market.label}</span>
         </div>
-        <button
-          className={`at-scan-watch ${watched ? 'active' : ''}`}
-          onClick={onToggleWatch}
-          title={watched ? 'Remove from watchlist' : 'Add to watchlist'}
-        >
-          <Star size={15} fill={watched ? 'currentColor' : 'none'} />
-        </button>
+        <div className="at-scan-card__head-actions">
+          {isQualifying && (
+            <span className="at-scan-badge">Qualifying</span>
+          )}
+          <button
+            className={`at-scan-watch ${watched ? 'active' : ''}`}
+            onClick={onToggleWatch}
+            title={watched ? 'Remove from watchlist' : 'Add to watchlist'}
+          >
+            <Star size={15} fill={watched ? 'currentColor' : 'none'} />
+          </button>
+        </div>
       </div>
 
       <div className="at-scan-card__price">
@@ -424,6 +447,14 @@ function MarketCard({ market, analysis, watched, onToggleWatch, onAnalyze, onTra
         </div>
       </div>
 
+      {isQualifying && (
+        <div className="at-scan-entry">
+          <span className="at-scan-entry__label">Entry Point</span>
+          <span className="at-scan-entry__digit">{entryPoint}</span>
+          <span className="at-scan-entry__type">{tradeType}</span>
+        </div>
+      )}
+
       <div className="at-scan-card__patterns">
         {patterns.slice(0, 3).map(p => (
           <span key={p} className="at-scan-chip at-scan-chip--soft">{p}</span>
@@ -447,7 +478,7 @@ function ScannerModal({ marketId, results, watched, onToggleWatch, onTrade, onCl
   const result = results.find(r => r.market.id === marketId)
   if (!result) return null
   const { market, ...a } = result
-  const { changePct, dir, signal, patterns, rsi, streak, streakDir, lastDigit, parity, volPct, momentumPct, distPct, reasoning } = a
+  const { changePct, dir, signal, patterns, rsi, streak, streakDir, lastDigit, parity, volPct, momentumPct, distPct, reasoning, entryPoint, tradeType, isQualifying } = a
 
   return (
     <div className="at-modal-overlay" onClick={onClose}>
@@ -493,6 +524,16 @@ function ScannerModal({ marketId, results, watched, onToggleWatch, onTrade, onCl
             <div className="at-scan-detail__cell">
               <span>Boundary</span><b>{distPct.toFixed(2)}%</b>
             </div>
+            {isQualifying && (
+              <>
+                <div className="at-scan-detail__cell at-scan-detail__cell--entry">
+                  <span>Entry Point</span><b className="at-scan-entry__digit--modal">{entryPoint}</b>
+                </div>
+                <div className="at-scan-detail__cell">
+                  <span>Trade Type</span><b>{tradeType}</b>
+                </div>
+              </>
+            )}
           </div>
 
           <div className="at-scan-card__patterns">

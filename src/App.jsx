@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import LiveChat from './components/LiveChat'
 import LiveTicker from './components/LiveTicker'
+import CookieConsent from './components/CookieConsent'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import AppPage from './pages/AppPage'
@@ -25,6 +26,7 @@ function AppLayout() {
 
   return (
     <>
+      <CookieConsent />
       <LiveChat />
       {!hideTicker && <LiveTicker />}
       <Routes>
