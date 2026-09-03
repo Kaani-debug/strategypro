@@ -4369,6 +4369,36 @@ select.form-input {
   color: var(--du-text-profit-success);
   font-variant-numeric: tabular-nums;
 }
+.at-scan-entry__digits {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+.at-scan-entry__digits .at-scan-entry__digit {
+  min-width: 24px;
+  text-align: center;
+  background: var(--du-general-main-2);
+  border: 1px solid var(--du-general-active);
+  border-radius: 7px;
+  padding: 0.18rem 0.3rem;
+}
+.theme--dark .at-scan-entry__digits .at-scan-entry__digit {
+  background: var(--du-general-main-1);
+}
+.at-scan-entry__digits--modal {
+  gap: 0.3rem;
+}
+.at-scan-entry__digits--modal .at-scan-entry__digit--modal {
+  min-width: 26px;
+  text-align: center;
+  background: var(--du-general-main-2);
+  border: 1px solid var(--du-text-profit-success);
+  border-radius: 7px;
+  padding: 0.18rem 0.32rem;
+}
+.theme--dark .at-scan-entry__digits--modal .at-scan-entry__digit--modal {
+  background: rgba(64, 189, 139, 0.1);
+}
 .at-scan-detail__cell--entry {
   border-color: var(--du-text-profit-success) !important;
   background: rgba(12, 122, 82, 0.08);
