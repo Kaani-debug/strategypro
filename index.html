@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <link rel="stylesheet" href="%BASE_URL%dist/smartcharts.css" />
     <meta name="title" content="StrategyPro" />
     <meta name="description" content="StrategyPro - Your Ultimate Partner in Trading Success. At StrategyPro, we don't just teach trading — we build traders. Join a growing community where you'll access: proven strategies, real-time mentorship, and powerful tools designed to boost trading consistency and profitability" />
@@ -20,7 +23,14 @@
           if (!t && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark'
           if (!t) t = 'dark'
         } catch (e) { t = 'dark' }
-        document.body.className = 'body theme theme--' + t
+        var apply = function () {
+          document.body.className = 'body theme theme--' + t
+        }
+        if (document.body) {
+          apply()
+        } else {
+          window.addEventListener('DOMContentLoaded', apply)
+        }
       })()
     </script>
   </head>

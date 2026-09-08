@@ -8,20 +8,20 @@
 }
 
 .theme--dark .tr-root {
-  --du-general-main-1: #16130e;
-  --du-general-section-1: #1e1a14;
-  --du-general-active: #393228;
-  --du-general-hover: #282219;
-  --du-text-prominent: #f3efe6;
-  --du-text-general: #c0b8a8;
-  --du-text-less-prominent: #8d8474;
-  --du-brand-red-coral: #e65b4a;
-  --du-text-profit-success: #40bd8b;
-  --du-text-loss-danger: #ee6b58;
-  --du-text-warning: #e5a83a;
-  --du-blue: #6a82d6;
-  --du-button-primary-default: #6a82d6;
-  --du-button-primary-hover: #7c92e0;
+  --du-general-main-1: #0a0f1f;
+  --du-general-section-1: #101830;
+  --du-general-active: #28324d;
+  --du-general-hover: #18213a;
+  --du-text-prominent: #eef1fa;
+  --du-text-general: #b7c1d8;
+  --du-text-less-prominent: #93a0bd;
+  --du-brand-red-coral: #fb7185;
+  --du-text-profit-success: #34d399;
+  --du-text-loss-danger: #f87171;
+  --du-text-warning: #fbbf24;
+  --du-blue: #60a5fa;
+  --du-button-primary-default: #6366f1;
+  --du-button-primary-hover: #818cf8;
 }
 
 .tr-backdrop {

@@ -1441,7 +1441,7 @@
   gap: 0.5rem;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #ece8df;
+  color: #eef1fa;
 }
 
 .ws-modal__console-live {
@@ -1507,7 +1507,7 @@
 
 .ws-stage__detail {
   font-size: 0.98rem;
-  color: #a39a89;
+  color: #8fa0bd;
   word-wrap: break-word;
 }
 
@@ -1515,16 +1515,16 @@
   flex-shrink: 0;
   margin-left: auto;
   font-size: 0.9rem;
-  color: #8d8474;
+  color: #93a0bd;
   font-variant-numeric: tabular-nums;
 }
 
 .ws-stage--success { border-left-color: var(--du-text-profit-success); }
 .ws-stage--success .ws-stage__icon { color: var(--du-text-profit-success); }
-.ws-stage--success .ws-stage__detail { color: color-mix(in srgb, var(--du-text-profit-success) 72%, #b3aa98); }
+.ws-stage--success .ws-stage__detail { color: color-mix(in srgb, var(--du-text-profit-success) 72%, #93a0bd); }
 .ws-stage--warning { border-left-color: var(--du-text-warning); }
 .ws-stage--warning .ws-stage__icon { color: var(--du-text-warning); }
-.ws-stage--warning .ws-stage__detail { color: color-mix(in srgb, var(--du-text-warning) 72%, #b3aa98); }
+.ws-stage--warning .ws-stage__detail { color: color-mix(in srgb, var(--du-text-warning) 72%, #93a0bd); }
 .ws-stage--info { border-left-color: var(--du-blue); }
 .ws-stage--info .ws-stage__icon { color: color-mix(in srgb, var(--du-blue) 80%, #fff); }
 
@@ -1542,14 +1542,14 @@
   opacity: 0.55;
 }
 .ws-stage--pending .ws-stage__icon { color: var(--du-text-less-prominent); }
-.ws-stage--pending .ws-stage__detail { color: #8d8474; }
+.ws-stage--pending .ws-stage__detail { color: #93a0bd; }
 
 .ws-stage--hold {
   border-left-color: var(--du-text-warning);
   background: color-mix(in srgb, var(--du-text-warning) 8%, transparent);
 }
 .ws-stage--hold .ws-stage__icon { color: var(--du-text-warning); }
-.ws-stage--hold .ws-stage__detail { color: color-mix(in srgb, var(--du-text-warning) 72%, #b3aa98); }
+.ws-stage--hold .ws-stage__detail { color: color-mix(in srgb, var(--du-text-warning) 72%, #93a0bd); }
 
 @keyframes wsScan {
   from { background-position: 200% 0; }

@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
 import { useSimulation } from '../hooks/useSimulation'
-import AuthModal from '../components/AuthModal'
 import {
   Zap, ArrowRight, Bot, ChartNoAxesColumn, Users, ShieldCheck,
   CircleCheckBig, TriangleAlert
@@ -97,9 +95,7 @@ function useScrollReveal() {
 
 export default function Home() {
   const navigate = useNavigate()
-  const { user } = useAuth()
   const { prices, connected, getDirection } = useSimulation()
-  const [authOpen, setAuthOpen] = useState(false)
   const [displayText, setDisplayText] = useState('')
   const [textIdx, setTextIdx] = useState(0)
   const [charIdx, setCharIdx] = useState(0)
@@ -161,7 +157,7 @@ export default function Home() {
               <span className="lp-header__logo-strat">Strategy</span>
               <span className="lp-header__logo-pro">Pro</span>
             </div>
-            <button className="lp-header__login-btn" onClick={() => user ? navigate('/app') : setAuthOpen(true)}>
+            <button className="lp-header__login-btn" onClick={() => navigate('/login')}>
               <span>Login Now</span>
               <ArrowRight size={18} />
             </button>
@@ -199,7 +195,7 @@ export default function Home() {
               </p>
             </div>
             <div className="lp-hero__cta">
-              <button className="lp-hero__cta-btn" onClick={() => user ? navigate('/app') : setAuthOpen(true)}>
+              <button className="lp-hero__cta-btn" onClick={() => navigate('/login')}>
                 <span>Start Trading Now</span>
                 <ArrowRight size={20} />
               </button>
@@ -296,7 +292,7 @@ export default function Home() {
             <span className="lp-section-eyebrow scroll-reveal">Get Started</span>
             <h2 className="lp-final-cta__title scroll-reveal">Ready to Transform Your Trading?</h2>
             <p className="lp-final-cta__text scroll-reveal">Join 50,000+ traders who are already profiting with StrategyPro. Start with a free virtual account today.</p>
-            <button className="lp-final-cta__btn scroll-reveal" onClick={() => user ? navigate('/app') : setAuthOpen(true)}>
+            <button className="lp-final-cta__btn scroll-reveal" onClick={() => navigate('/login')}>
               <span>Start Free Trial</span>
               <ArrowRight size={20} />
             </button>
@@ -345,8 +341,6 @@ export default function Home() {
           <div className="lp-footer__network-dot" />
         </div>
       </footer>
-
-      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </div>
   )
 }

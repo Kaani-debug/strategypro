@@ -48,30 +48,30 @@ interface TerminalChartProps {
 
 const COLORS = {
   light: {
-    background: '#fdfbf7',
-    text: '#262219',
-    grid: '#ece6da',
-    border: '#d5cdbe',
-    line: '#c23a2d',
-    top: 'rgba(194, 58, 45, 0.24)',
-    bottom: 'rgba(194, 58, 45, 0.00)',
-    crosshair: '#9a9181',
-    priceLine: '#c23a2d',
-    projection: '#e5a83a',
-    marker: '#9c82d1',
+    background: '#f6f8fc',
+    text: '#0e1b34',
+    grid: '#e2e7f1',
+    border: '#cdd6e6',
+    line: '#4f46e5',
+    top: 'rgba(79, 70, 229, 0.22)',
+    bottom: 'rgba(79, 70, 229, 0.00)',
+    crosshair: '#7e8ba8',
+    priceLine: '#4f46e5',
+    projection: '#38bdf8',
+    marker: '#7c3aed',
   },
   dark: {
-    background: '#16130e',
-    text: '#d5cdbe',
-    grid: '#282219',
-    border: '#3a3328',
-    line: '#e65b4a',
-    top: 'rgba(230, 91, 74, 0.26)',
-    bottom: 'rgba(230, 91, 74, 0.00)',
-    crosshair: '#8d8474',
-    priceLine: '#e65b4a',
-    projection: '#e5a83a',
-    marker: '#b49ad8',
+    background: '#0a0f1f',
+    text: '#b7c1d8',
+    grid: '#18213a',
+    border: '#28324d',
+    line: '#818cf8',
+    top: 'rgba(99, 102, 241, 0.26)',
+    bottom: 'rgba(99, 102, 241, 0.00)',
+    crosshair: '#93a0bd',
+    priceLine: '#818cf8',
+    projection: '#38bdf8',
+    marker: '#a78bfa',
   },
 }
 
@@ -221,10 +221,10 @@ export default function TerminalChart({
     tooltip.style.fontWeight = '600'
     tooltip.style.letterSpacing = '0.01em'
     tooltip.style.display = 'none'
-    tooltip.style.background = theme === 'dark' ? 'rgba(22,19,14,0.92)' : 'rgba(255,255,255,0.94)'
-    tooltip.style.color = theme === 'dark' ? '#ece8df' : '#262219'
+    tooltip.style.background = theme === 'dark' ? 'rgba(10,15,31,0.92)' : 'rgba(255,255,255,0.94)'
+    tooltip.style.color = theme === 'dark' ? '#eef1fa' : '#0e1b34'
     tooltip.style.border = `1px solid ${colors.border}`
-    tooltip.style.boxShadow = '0 6px 20px rgba(38,30,18,0.18)'
+    tooltip.style.boxShadow = '0 6px 20px rgba(2,6,23,0.18)'
     tooltip.style.whiteSpace = 'nowrap'
     element.appendChild(tooltip)
 
