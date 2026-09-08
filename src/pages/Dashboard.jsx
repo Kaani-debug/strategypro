@@ -10,7 +10,7 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview')
 
   const stats = [
-    { label: 'Total Balance', value: `$${(user?.balance || 15247.32).toLocaleString()}`, change: '+12.4%', up: true },
+    { label: 'Total Balance', value: `$${(user?.balance || 0).toLocaleString()}`, change: 'Funded', up: true },
     { label: "Today's P&L", value: '+$847.21', change: '+$847.21', up: true },
     { label: 'Active Bots', value: '3', change: 'Running', up: true },
     { label: 'Win Rate', value: '72.4%', change: '+3.2%', up: true },

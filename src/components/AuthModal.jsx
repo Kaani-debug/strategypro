@@ -49,7 +49,7 @@ export default function AuthModal({ open, onClose }) {
             {tab === 'login' ? 'Sign In' : 'Create Account'}
           </button>
           <div className="auth-modal__hint">
-            Demo accounts: <strong>demo@strategypro.com</strong> / <strong>demo123</strong>
+            Sign in to your real funded account to start trading.
           </div>
         </form>
       </div>

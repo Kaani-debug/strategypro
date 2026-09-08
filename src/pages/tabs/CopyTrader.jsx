@@ -70,7 +70,7 @@ export default function CopyTrader() {
   const [riskOpen, setRiskOpen] = useState(false)
   const idRef = useRef(1)
 
-  const balance = user?.balance ?? 15247.32
+  const balance = user?.balance ?? 0
   const acctId = user?.acctId || 'ROT91857080'
 
   const pushMessage = (type, text) => {

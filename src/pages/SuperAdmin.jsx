@@ -73,7 +73,7 @@ export default function SuperAdmin() {
                 </select>
               </div>
               <div className="form-group" style={{marginBottom:'1.2rem'}}>
-                <label className="form-label">Default Demo Balance ($)</label>
+                <label className="form-label">Default Starting Balance ($)</label>
                 <input type="number" className="form-input" value={config.demoBalance || 10000} onChange={e => setConfig(p => ({...p, demoBalance: Number(e.target.value)}))} />
               </div>
               <div className="form-group" style={{marginBottom:'1.2rem'}}>

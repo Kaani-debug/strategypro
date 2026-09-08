@@ -54,7 +54,7 @@ export default function Login() {
               </button>
             </form>
             <div style={{textAlign:'center',fontSize:'1.1rem',color:'var(--du-text-less-prominent)',marginTop:'2rem'}}>
-              Demo: <strong>demo@strategypro.com</strong> / <strong>demo123</strong><br/>
+              Sign in to your real account to start trading with funded money.<br/>
               Admin: <strong>admin@strategypro.com</strong> / <strong>admin123</strong>
             </div>
           </GlassCard>

@@ -1641,6 +1641,8 @@
   .deriv-header__divider { height: 1.9rem; margin: 0 0.2rem; }
   .deriv-header__icon-btn { display: none; }
   .deriv-header__acct-toggle { height: 3.1rem; padding: 0 0.7rem; font-size: 1rem; }
+  .deriv-header__fund-btn { height: 3.1rem; padding: 0 0.9rem; font-size: 1rem; }
+  .deriv-header__terminal-link span { display: none; }
 }
 
 /* --- App chrome (tabs + content + footer) on phones --- */

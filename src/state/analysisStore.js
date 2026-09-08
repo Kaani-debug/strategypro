@@ -81,8 +81,7 @@ export const STRATEGIES = [
 ]
 
 export const ACCOUNTS = [
-  { type: 'real', label: 'Deriv Real', id: 'CR6083459', balance: 50000, currency: 'USD' },
-  { type: 'demo', label: 'Deriv Demo', id: 'VRTC91857', balance: 10000, currency: 'USD' },
+  { type: 'real', label: 'Deriv Real', id: 'CR6083459', balance: 0, currency: 'USD' },
 ]
 
 export const ANALYSIS_STAGES = [
@@ -118,7 +117,7 @@ export const QUALIFY_MIN = 6
 export const marketById = id => MARKETS.find(m => m.id === id) || MARKETS[0]
 export const modeById = id => MODES.find(m => m.id === id) || MODES[0]
 export const strategyById = id => STRATEGIES.find(s => s.id === id) || STRATEGIES[0]
-export const accountById = id => ACCOUNTS.find(a => a.type === id) || ACCOUNTS[1]
+export const accountById = id => ACCOUNTS.find(a => a.type === id) || ACCOUNTS[0]
 
 const MAX_LOG = 450
 const MAX_HISTORY = 60
@@ -519,7 +518,7 @@ export const useAnalysisStore = create((set, get) => ({
   market: '1HZ100V',
   mode: 'smart',
   strategy: 'rise-fall',
-  account: ACCOUNTS[1],
+  account: ACCOUNTS[0],
   phase: 'idle',
   dataReady: false,
   ticksCollected: 0,
@@ -638,9 +637,15 @@ export const useAnalysisStore = create((set, get) => ({
     set({ account: acc })
     get().appendLog({
       category: 'auth',
-      message: `Account switched to ${acc.label} — ${acc.type === 'real' ? 'live trading environment' : 'simulated trading environment'}`,
+      message: `Account switched to ${acc.label} — live trading environment`,
       code: 'ACC-200',
     })
+  },
+
+  setAccountBalance: balance => {
+    const cur = get().account
+    if (Number(cur.balance) === Number(balance)) return
+    set({ account: { ...cur, balance: Number(balance) } })
   },
 
   startAnalysis: () => {

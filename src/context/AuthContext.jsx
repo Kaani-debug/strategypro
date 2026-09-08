@@ -5,7 +5,6 @@ const AuthContext = createContext(null)
 const ROLES = { USER: 'user', ADMIN: 'admin', SUPERADMIN: 'superadmin' }
 
 const MOCK_USERS = [
-  { id: 'U001', email: 'demo@strategypro.com', password: 'demo123', name: 'Demo Trader', role: 'user', avatar: 'DT', createdAt: '2025-01-15', status: 'active', bots: 3, balance: 15247.32 },
   { id: 'U002', email: 'admin@strategypro.com', password: 'admin123', name: 'Admin User', role: 'admin', avatar: 'AU', createdAt: '2024-11-01', status: 'active', bots: 0, balance: 50000 },
   { id: 'U003', email: 'super@strategypro.com', password: 'super123', name: 'Super Admin', role: 'superadmin', avatar: 'SA', createdAt: '2024-06-01', status: 'active', bots: 0, balance: 100000 },
   { id: 'U004', email: 'john@example.com', password: 'pass123', name: 'John Doe', role: 'user', avatar: 'JD', createdAt: '2025-03-10', status: 'active', bots: 3, balance: 12450 },
@@ -18,7 +17,10 @@ const MOCK_USERS = [
 function loadUsers() {
   try {
     const saved = localStorage.getItem('sp_users')
-    if (saved) return JSON.parse(saved)
+    if (saved) {
+      const parsed = JSON.parse(saved)
+      return parsed.filter(u => u.email !== 'demo@strategypro.com')
+    }
   } catch {}
   return MOCK_USERS
 }
@@ -57,7 +59,8 @@ export function AuthProvider({ children }) {
 
   const register = (data) => {
     if (users.find(u => u.email === data.email)) return { error: 'Email already registered' }
-    const nu = { id: 'U' + String(users.length + 1).padStart(3, '0'), ...data, role: 'user', status: 'active', bots: 0, balance: 10000, avatar: data.name.split(' ').map(n => n[0]).join(''), createdAt: new Date().toISOString().split('T')[0] }
+    const maxId = users.reduce((m, u) => Math.max(m, parseInt((u.id || 'U0').slice(1), 10) || 0), 0)
+    const nu = { id: 'U' + String(maxId + 1).padStart(3, '0'), ...data, role: 'user', status: 'active', bots: 0, balance: 0, avatar: data.name.split(' ').map(n => n[0]).join(''), createdAt: new Date().toISOString().split('T')[0] }
     setUsers(p => [...p, nu])
     const { password: _, ...safe } = nu
     setUser(safe)
@@ -72,6 +75,15 @@ export function AuthProvider({ children }) {
     if (user?.id === id) setUser(p => ({ ...p, ...updates }))
   }
 
+  const fundAccount = (amount) => {
+    const amt = Math.round(Number(amount) * 100) / 100
+    if (!user || !amt || amt <= 0) return false
+    const nextBalance = Math.round((user.balance + amt) * 100) / 100
+    setUsers(p => p.map(u => (u.id === user.id ? { ...u, balance: nextBalance } : u)))
+    setUser(p => (p ? { ...p, balance: nextBalance } : p))
+    return true
+  }
+
   const deleteUser = (id) => {
     setUsers(p => p.filter(u => u.id !== id))
     if (user?.id === id) logout()
@@ -80,7 +92,7 @@ export function AuthProvider({ children }) {
   const hasRole = (...roles) => user && roles.includes(user.role)
 
   return (
-    <AuthContext.Provider value={{ user, users, loading, login, register, logout, updateUser, deleteUser, hasRole, ROLES, setUsers }}>
+    <AuthContext.Provider value={{ user, users, loading, login, register, logout, updateUser, deleteUser, fundAccount, hasRole, ROLES, setUsers }}>
       {children}
     </AuthContext.Provider>
   )

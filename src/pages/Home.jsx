@@ -276,7 +276,7 @@ export default function Home() {
             {[
               'Bank-grade security with encrypted sessions',
               'Lightning-fast execution under 50ms',
-              'Virtual account for risk-free testing',
+              'Funded real-money accounts with instant deposits',
               '24/7 customer support and trading resources',
               'Multi-asset trading across forex, crypto, and indices',
               'Mobile app for trading on the go',
@@ -291,7 +291,7 @@ export default function Home() {
           <div className="lp-final-cta__content">
             <span className="lp-section-eyebrow scroll-reveal">Get Started</span>
             <h2 className="lp-final-cta__title scroll-reveal">Ready to Transform Your Trading?</h2>
-            <p className="lp-final-cta__text scroll-reveal">Join 50,000+ traders who are already profiting with StrategyPro. Start with a free virtual account today.</p>
+            <p className="lp-final-cta__text scroll-reveal">Join 50,000+ traders who are already profiting with StrategyPro. Fund your real account and start trading today.</p>
             <button className="lp-final-cta__btn scroll-reveal" onClick={() => navigate('/login')}>
               <span>Start Free Trial</span>
               <ArrowRight size={20} />
