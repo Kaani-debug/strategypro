@@ -1,4 +1,5 @@
 import { Boxes, Gauge, Sparkles, Briefcase, Search, MonitorPlay, HandCoins, ShieldCheck, Bot, Rocket, BarChart3, LineChart, TrendingUp, DollarSign, Zap } from 'lucide-react'
+import TraderBotControl from '../../components/TraderBotControl'
 
 function TabStub({ icon: Icon, title, description, features }) {
   return (
@@ -64,19 +65,51 @@ export function AnalysisToolTab() {
 }
 
 export function ManualTraderTab() {
-  return <TabStub icon={MonitorPlay} title="Manual Trader" description="Execute trades manually with real-time data"
-    features={[
-      { icon: MonitorPlay, label: 'One-click Trading' }, { icon: BarChart3, label: 'Live Charts' },
-      { icon: TrendingUp, label: 'Real-time Quotes' }, { icon: DollarSign, label: 'Position Management' },
-    ]} />
+  return (
+    <div className="tab-content">
+      <div className="tab-content__header">
+        <div className="tab-content__icon"><MonitorPlay size={32} /></div>
+        <h2 className="tab-content__title">Manual Trader</h2>
+        <p className="tab-content__subtitle">Execute trades manually with real-time data</p>
+      </div>
+      <div className="tab-stub__features">
+        {[
+          { icon: MonitorPlay, label: 'One-click Trading' }, { icon: BarChart3, label: 'Live Charts' },
+          { icon: TrendingUp, label: 'Real-time Quotes' }, { icon: DollarSign, label: 'Position Management' },
+        ].map((f, i) => (
+          <div key={i} className="tab-stub__feature">
+            <f.icon size={20} />
+            <span>{f.label}</span>
+          </div>
+        ))}
+      </div>
+      <TraderBotControl mode="manual" />
+    </div>
+  )
 }
 
 export function BulkTraderTab() {
-  return <TabStub icon={HandCoins} title="Bulk Trader" description="Execute multiple trades simultaneously"
-    features={[
-      { icon: HandCoins, label: 'Multi-asset Trading' }, { icon: TrendingUp, label: 'Batch Orders' },
-      { icon: BarChart3, label: 'Portfolio Rebalance' }, { icon: DollarSign, label: 'Volume Discounts' },
-    ]} />
+  return (
+    <div className="tab-content">
+      <div className="tab-content__header">
+        <div className="tab-content__icon"><HandCoins size={32} /></div>
+        <h2 className="tab-content__title">Bulk Trader</h2>
+        <p className="tab-content__subtitle">Execute multiple trades simultaneously</p>
+      </div>
+      <div className="tab-stub__features">
+        {[
+          { icon: HandCoins, label: 'Multi-asset Trading' }, { icon: TrendingUp, label: 'Batch Orders' },
+          { icon: BarChart3, label: 'Portfolio Rebalance' }, { icon: DollarSign, label: 'Volume Discounts' },
+        ].map((f, i) => (
+          <div key={i} className="tab-stub__feature">
+            <f.icon size={20} />
+            <span>{f.label}</span>
+          </div>
+        ))}
+      </div>
+      <TraderBotControl mode="bulk" />
+    </div>
+  )
 }
 
 export { default as ChartsTab } from './ChartsTab'

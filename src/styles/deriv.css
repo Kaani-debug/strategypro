@@ -6139,3 +6139,128 @@ select.form-input {
   background: linear-gradient(180deg, rgba(16, 24, 48, 0.9), rgba(10, 15, 31, 0.95));
   box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
 }
+
+/* --- Manual / Bulk Trader: Run Bot / Stop Bot control --- */
+.trader-control {
+  max-width: 420px;
+  margin: 0 auto 2rem;
+  padding: 2.2rem 2rem;
+  border-radius: var(--radius-lg);
+  background: var(--du-general-section-1);
+  border: 1px solid var(--du-general-active);
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  text-align: left;
+}
+.theme--dark .trader-control {
+  background: linear-gradient(180deg, rgba(16, 24, 48, 0.92), rgba(10, 15, 31, 0.95));
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+.trader-control__head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.trader-control__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius-pill);
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--du-general-active) 55%, transparent);
+  color: var(--du-text-general);
+}
+.trader-control__badge--live {
+  background: color-mix(in srgb, var(--du-text-profit-success) 16%, transparent);
+  color: var(--du-text-profit-success);
+}
+.trader-control__hint {
+  font-size: 1.25rem;
+  color: var(--du-text-less-prominent);
+}
+.trader-control__config {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.2rem;
+}
+.trader-control__config .form-label {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+.trader-control__speed {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--du-general-active);
+  background: var(--du-general-main-1);
+  color: var(--du-text-less-prominent);
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.trader-control__speed.boosted {
+  color: var(--du-text-profit-success);
+  border-color: color-mix(in srgb, var(--du-text-profit-success) 45%, transparent);
+}
+.trader-control__speed:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.trader-control__actions {
+  display: flex;
+  gap: 1rem;
+}
+.trader-control__btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 4.6rem;
+  border-radius: var(--radius-md);
+  font-size: 1.4rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+.trader-control__btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.985);
+}
+.trader-control__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.trader-control__btn--run {
+  background-image: linear-gradient(135deg, #4f46e5 0%, #6366f1 45%, #38bdf8 100%);
+  color: #fff;
+  box-shadow: 0 10px 30px -10px color-mix(in srgb, #4f46e5 70%, transparent);
+}
+.trader-control__btn--run:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+.trader-control__btn--stop {
+  background: color-mix(in srgb, var(--du-text-loss-danger) 12%, transparent);
+  border-color: color-mix(in srgb, var(--du-text-loss-danger) 55%, transparent);
+  color: var(--du-text-loss-danger);
+}
+.trader-control__btn--stop:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--du-text-loss-danger) 20%, transparent);
+}
+@media (max-width: 640px) {
+  .trader-control {
+    padding: 1.8rem 1.4rem;
+  }
+  .trader-control__config {
+    grid-template-columns: 1fr;
+  }
+}
