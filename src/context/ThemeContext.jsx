@@ -4,7 +4,16 @@ const ThemeContext = createContext(null)
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    try { return localStorage.getItem('sp_theme') || 'light' } catch { return 'light' }
+    try {
+      const stored = localStorage.getItem('sp_theme')
+      if (stored) return stored
+      if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark'
+      }
+      return 'light'
+    } catch {
+      return 'light'
+    }
   })
 
   useEffect(() => {

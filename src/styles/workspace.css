@@ -1610,7 +1610,24 @@
    ========================================================= */
 
 /* --- Dynamic viewport height (fix mobile URL-bar shrink/overlap) --- */
-.app-page { height: 100dvh; }
+.app-page { height: 100vh; height: 100dvh; }
+
+/* Make internal scroll areas momentum-scroll smoothly on touch devices */
+.ws-body,
+.ws-mode-content,
+.ws-console,
+.analysis-workspace,
+.dc-tab-content,
+.tr-scroll,
+.tr-content,
+.cc-panel {
+  -webkit-overflow-scrolling: touch;
+}
+.ws-mode-content,
+.dc-tab-content,
+.tr-scroll {
+  overscroll-behavior-y: contain;
+}
 
 /* --- Deriv app header: compact on phones --- */
 @media (max-width: 720px) {

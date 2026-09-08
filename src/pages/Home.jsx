@@ -64,7 +64,11 @@ function ReviewCard({ review, hidden }) {
 
 function useScrollReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll('.scroll-reveal')
+    const els = Array.from(document.querySelectorAll('.scroll-reveal'))
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(el => el.classList.add('scroll-reveal--visible'))
+      return
+    }
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -80,7 +84,14 @@ function useScrollReveal() {
         obs.observe(el)
       }
     })
-    return () => obs.disconnect()
+    const safety = window.setTimeout(() => {
+      els.forEach(el => el.classList.add('scroll-reveal--visible'))
+      obs.disconnect()
+    }, 4000)
+    return () => {
+      obs.disconnect()
+      window.clearTimeout(safety)
+    }
   }, [])
 }
 

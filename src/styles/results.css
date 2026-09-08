@@ -1457,7 +1457,10 @@
 @media (max-width: 640px) {
   .tr-panel {
     width: 100vw;
-    bottom: 7rem;
+    bottom: 0;
+    height: 92vh;
+    height: 92dvh;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
 
   .tr-stats {
