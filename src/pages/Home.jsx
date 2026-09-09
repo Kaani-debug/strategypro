@@ -32,7 +32,9 @@ const TYPING_TEXTS = [
 
 const SYM_LIST = ['Vol 10', 'Vol 25', 'Vol 50', 'Vol 75', 'Vol 100', 'Vol 10 (1s)', 'Vol 100 (1s)', 'Bull Market', 'Bear Market']
 
-const CANDLE_H = 96
+const CANDLE_H = 120
+
+const clamp01 = (v, lo, hi) => Math.max(lo, Math.min(hi, v))
 
 function mulberry32(seed) {
   let a = seed >>> 0
@@ -45,16 +47,30 @@ function mulberry32(seed) {
   }
 }
 
+// OHLC walk — builds a realistic candlestick series (open/high/low/close in px space)
 function makeCandles() {
   const rand = mulberry32(20260101)
-  return Array.from({ length: 48 }, () => {
-    const up = rand() > 0.45
-    const tailTop = 8 + Math.round(rand() * 14)
-    const tailBottom = 8 + Math.round(rand() * 14)
-    const body = 22 + Math.round(rand() * 52)
-    const top = tailTop + Math.round((CANDLE_H - tailTop - tailBottom - body) * rand())
-    return { up, body, top }
-  })
+  let level = 60
+  const out = []
+  for (let i = 0; i < 60; i++) {
+    const open = clamp01(level + (rand() - 0.5) * 6, 8, 112)
+    const close = clamp01(open + (rand() - 0.5) * 52, 8, 112)
+    const bodyTop = clamp01(Math.min(open, close), 8, 112)
+    const bodyH = Math.round(clamp01(Math.abs(close - open), 3.5, 96))
+    const high = clamp01(bodyTop - 1 - rand() * 16, 2, bodyTop - 1)
+    const low = clamp01(bodyTop + bodyH + 1 + rand() * 16, bodyTop + bodyH + 1, CANDLE_H - 4)
+    const up = close >= open
+    out.push({
+      up,
+      hollow: up && bodyH >= 18 && rand() > 0.45,
+      high: Math.round(high),
+      bodyTop: Math.round(bodyTop),
+      bodyH,
+      low: Math.round(low),
+    })
+    level = close
+  }
+  return out
 }
 
 function StarRating() {
@@ -257,10 +273,17 @@ export default function Home() {
             <div className="lp-candles__row" key={dup}>
               {candles.map((c, i) => (
                 <span className="lp-candle" key={`${dup}-${i}`}>
-                  <span className={`lp-candle__wick ${c.up ? 'is-up' : 'is-down'}`} />
                   <span
-                    className={`lp-candle__body ${c.up ? 'is-up' : 'is-down'}`}
-                    style={{ height: c.body, top: c.top }}
+                    className={`lp-candle__wick ${c.up ? 'is-up' : 'is-down'}`}
+                    style={{ top: c.high, height: c.bodyTop - c.high }}
+                  />
+                  <span
+                    className={`lp-candle__body ${c.up ? 'is-up' : 'is-down'}${c.hollow ? ' is-hollow' : ''}`}
+                    style={{ top: c.bodyTop, height: c.bodyH }}
+                  />
+                  <span
+                    className={`lp-candle__wick ${c.up ? 'is-up' : 'is-down'}`}
+                    style={{ top: c.bodyTop + c.bodyH, height: c.low - (c.bodyTop + c.bodyH) }}
                   />
                 </span>
               ))}
