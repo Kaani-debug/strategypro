@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSimulation } from '../hooks/useSimulation'
 import {
@@ -31,6 +31,31 @@ const TYPING_TEXTS = [
 ]
 
 const SYM_LIST = ['Vol 10', 'Vol 25', 'Vol 50', 'Vol 75', 'Vol 100', 'Vol 10 (1s)', 'Vol 100 (1s)', 'Bull Market', 'Bear Market']
+
+const CANDLE_H = 96
+
+function mulberry32(seed) {
+  let a = seed >>> 0
+  return () => {
+    a |= 0
+    a = (a + 0x6d2b79f5) | 0
+    let t = Math.imul(a ^ (a >>> 15), 1 | a)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+function makeCandles() {
+  const rand = mulberry32(20260101)
+  return Array.from({ length: 48 }, () => {
+    const up = rand() > 0.45
+    const tailTop = 8 + Math.round(rand() * 14)
+    const tailBottom = 8 + Math.round(rand() * 14)
+    const body = 22 + Math.round(rand() * 52)
+    const top = tailTop + Math.round((CANDLE_H - tailTop - tailBottom - body) * rand())
+    return { up, body, top }
+  })
+}
 
 function StarRating() {
   return (
@@ -100,6 +125,7 @@ export default function Home() {
   const [textIdx, setTextIdx] = useState(0)
   const [charIdx, setCharIdx] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
+  const candles = useMemo(() => makeCandles(), [])
   useScrollReveal()
 
   useEffect(() => {
@@ -219,6 +245,25 @@ export default function Home() {
             <div key={i} className="lp-hero__stat scroll-reveal">
               <div className="lp-hero__stat-value">{s.value}</div>
               <div className="lp-hero__stat-label">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Candlestick ticker — animated red/green candles marching right to left */}
+      <div className="lp-candles" aria-hidden="true">
+        <div className="lp-candles__track">
+          {[...Array(2)].map((_, dup) => (
+            <div className="lp-candles__row" key={dup}>
+              {candles.map((c, i) => (
+                <span className="lp-candle" key={`${dup}-${i}`}>
+                  <span className={`lp-candle__wick ${c.up ? 'is-up' : 'is-down'}`} />
+                  <span
+                    className={`lp-candle__body ${c.up ? 'is-up' : 'is-down'}`}
+                    style={{ height: c.body, top: c.top }}
+                  />
+                </span>
+              ))}
             </div>
           ))}
         </div>

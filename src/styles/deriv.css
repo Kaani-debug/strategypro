@@ -3316,6 +3316,97 @@ select.form-input {
 .lp-hero__stat-label {
   font-size: 1.3rem;
   color: var(--du-text-less-prominent);
+}
+/* --- Candlestick ticker: animated red/green candles marching right to left --- */
+.lp-candles {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  height: 96px;
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid color-mix(in srgb, var(--du-brand-accent) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--du-brand-accent) 30%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, #6366f1 7%, transparent), transparent 55%, color-mix(in srgb, #38bdf8 6%, transparent)),
+    var(--du-general-main-1);
+}
+.lp-candles::before,
+.lp-candles::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 70px;
+  z-index: 2;
+  pointer-events: none;
+}
+.lp-candles::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--du-general-main-1), transparent);
+}
+.lp-candles::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--du-general-main-1), transparent);
+}
+.lp-candles__track {
+  display: flex;
+  align-items: stretch;
+  will-change: transform;
+  animation: lpCandlesLeft 38s linear infinite;
+}
+.lp-candles__row {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px;
+}
+.lp-candle {
+  position: relative;
+  flex-shrink: 0;
+  width: 14px;
+  height: 96px;
+}
+.lp-candle__wick {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  width: 2px;
+  height: 100%;
+  border-radius: 1px;
+}
+.lp-candle__wick.is-up { background: #34d399; }
+.lp-candle__wick.is-down { background: #f87171; }
+.lp-candle__body {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  border-radius: 2px;
+}
+.lp-candle__body.is-up {
+  background: linear-gradient(180deg, #6ee7b7, #34d399);
+  box-shadow: 0 0 14px -2px color-mix(in srgb, #34d399 70%, transparent);
+}
+.lp-candle__body.is-down {
+  background: linear-gradient(180deg, #fb923c, #f87171);
+  box-shadow: 0 0 14px -2px color-mix(in srgb, #f87171 70%, transparent);
+}
+@keyframes lpCandlesLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (max-width: 640px) {
+  .lp-candles { height: 64px; }
+  .lp-candle { width: 9px; height: 64px; }
+  .lp-candles__row { gap: 5px; padding: 0 2px; }
+  .lp-candle__body { width: 7px; }
+  .lp-candle__wick { width: 1.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lp-candles__track { animation: none; }
 } /* Content sections */
 .lp-content {
   max-width: 1200px;
