@@ -208,15 +208,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Reviews marquee — full width */}
-        <div className="lp-hero__reviews scroll-reveal" aria-hidden="true">
-          <div className="lp-hero__reviews-track">
-            {[...Array(2)].map((_, dup) => REVIEWS.map((r, i) => (
-              <ReviewCard key={`${dup}-${i}`} review={r} hidden={dup > 0} />
-            )))}
-          </div>
-        </div>
-
         {/* Stats */}
         <div className="lp-hero__stats">
           {[
@@ -284,8 +275,15 @@ export default function Home() {
               <div className="lp-trust-badge"><CircleCheckBig size={18} /><span>Verified reviews</span></div>
             </div>
           </div>
-          <div className="lp-testimonials__grid scroll-reveal">
-            {REVIEWS.map((r, i) => <ReviewCard key={i} review={r} />)}
+          <div className="lp-testimonials__marquee scroll-reveal">
+            <div className="lp-testimonials__track">
+              <div className="lp-testimonials__copy">
+                {REVIEWS.map((r, i) => <ReviewCard key={`a-${i}`} review={r} />)}
+              </div>
+              <div className="lp-testimonials__copy" aria-hidden="true">
+                {REVIEWS.map((r, i) => <ReviewCard key={`b-${i}`} review={r} hidden />)}
+              </div>
+            </div>
           </div>
         </section>
 
