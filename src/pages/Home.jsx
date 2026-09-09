@@ -253,20 +253,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Testimonials */}
-        <section className="lp-testimonials" aria-label="Reviews">
-          <div className="lp-testimonials__header">
-            <span className="lp-section-eyebrow scroll-reveal">Community</span>
-            <h2 className="lp-testimonials__title scroll-reveal">Trusted by Traders Worldwide</h2>
-            <p className="lp-testimonials__subtitle scroll-reveal">Join thousands of successful traders who have transformed their trading with StrategyPro</p>
-            <div className="lp-testimonials__summary scroll-reveal">
-              <div className="lp-trust-badge"><StarRating /><span>4.9 average rating</span></div>
-              <div className="lp-trust-badge"><Users size={18} /><span>50,000+ traders</span></div>
-              <div className="lp-trust-badge"><CircleCheckBig size={18} /><span>Verified reviews</span></div>
-            </div>
-          </div>
-        </section>
-
         {/* Benefits */}
         <div className="lp-benefits">
           <span className="lp-section-eyebrow scroll-reveal">Why StrategyPro</span>
@@ -285,6 +271,23 @@ export default function Home() {
             ))}
           </ul>
         </div>
+
+        {/* Testimonials */}
+        <section className="lp-testimonials" aria-label="Reviews">
+          <div className="lp-testimonials__header">
+            <span className="lp-section-eyebrow scroll-reveal">Community</span>
+            <h2 className="lp-testimonials__title scroll-reveal">Trusted by Traders Worldwide</h2>
+            <p className="lp-testimonials__subtitle scroll-reveal">Join thousands of successful traders who have transformed their trading with StrategyPro</p>
+            <div className="lp-testimonials__summary scroll-reveal">
+              <div className="lp-trust-badge"><StarRating /><span>4.9 average rating</span></div>
+              <div className="lp-trust-badge"><Users size={18} /><span>50,000+ traders</span></div>
+              <div className="lp-trust-badge"><CircleCheckBig size={18} /><span>Verified reviews</span></div>
+            </div>
+          </div>
+          <div className="lp-testimonials__grid scroll-reveal">
+            {REVIEWS.map((r, i) => <ReviewCard key={i} review={r} />)}
+          </div>
+        </section>
 
         {/* Final CTA */}
         <div className="lp-final-cta">
