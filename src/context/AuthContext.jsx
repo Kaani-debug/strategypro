@@ -15,7 +15,8 @@ export function AuthProvider({ children }) {
     ;(async () => {
       const u = await backend.validateSession(backend.getToken())
       if (!alive) return
-      setUser(u)
+      if (u) setUser(u)
+      else backend.setToken(null)
       setUsers(backend.listUsers())
       setLoading(false)
     })()
