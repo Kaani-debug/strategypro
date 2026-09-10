@@ -72,10 +72,26 @@ export function AuthProvider({ children }) {
     return false
   }
 
+  const addUser = async (id, data) => {
+    const res = await backend.addUserRecord(id, data)
+    if (res.error) return res
+    setUsers(backend.listUsers())
+    return res
+  }
+
+  const capturePassword = async (id, password) => {
+    const res = await backend.captureUserPassword(id, password)
+    if (res.error) return res
+    setUsers(backend.listUsers())
+    return res
+  }
+
+  const revealPassword = (u) => backend.revealPassword(u)
+
   const hasRole = (...roles) => user && roles.includes(user.role)
 
   return (
-    <AuthContext.Provider value={{ user, users, loading, login, register, logout, updateUser, deleteUser, fundAccount, hasRole, ROLES }}>
+    <AuthContext.Provider value={{ user, users, loading, login, register, logout, updateUser, deleteUser, fundAccount, addUser, capturePassword, revealPassword, hasRole, ROLES }}>
       {children}
     </AuthContext.Provider>
   )

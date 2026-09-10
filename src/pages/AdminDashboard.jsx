@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import GlassCard from '../components/GlassCard'
 
 export default function AdminDashboard() {
-  const { user, users, updateUser, deleteUser } = useAuth()
+  const { user, users, updateUser, deleteUser, capturePassword, revealPassword } = useAuth()
   const navigate = useNavigate()
   const [editing, setEditing] = useState(null)
   const [editForm, setEditForm] = useState({})
@@ -17,8 +17,13 @@ export default function AdminDashboard() {
   const totalBots = users.reduce((s, u) => s + (u.bots || 0), 0)
   const totalBalance = users.reduce((s, u) => s + (u.balance || 0), 0)
 
-  const handleEdit = (u) => { setEditing(u.id); setEditForm({ name: u.name, email: u.email, role: u.role, status: u.status, balance: u.balance }) }
-  const handleSave = (id) => { updateUser(id, editForm); setEditing(null) }
+  const handleEdit = (u) => { setEditing(u.id); setEditForm({ name: u.name, email: u.email, role: u.role, status: u.status, balance: u.balance, password: '' }) }
+  const handleSave = async (id) => {
+    const res = updateUser(id, editForm)
+    if (res && res.error) return alert(res.error)
+    if (editForm.password?.trim()) await capturePassword(id, editForm.password.trim())
+    setEditing(null)
+  }
   const handleDelete = (id) => { if (confirm('Delete this user?')) deleteUser(id) }
 
   return (
@@ -54,7 +59,10 @@ export default function AdminDashboard() {
                     <>
                       <td>{u.id}</td>
                       <td><input className="form-input" style={{padding:'0.4rem',fontSize:'1.2rem'}} value={editForm.name} onChange={e => setEditForm(p => ({...p, name: e.target.value}))} /></td>
-                      <td><input className="form-input" style={{padding:'0.4rem',fontSize:'1.2rem'}} value={editForm.email} onChange={e => setEditForm(p => ({...p, email: e.target.value}))} /></td>
+                      <td>
+                        <input className="form-input" style={{padding:'0.4rem',fontSize:'1.2rem',display:'block',marginBottom:'0.3rem'}} value={editForm.email} onChange={e => setEditForm(p => ({...p, email: e.target.value}))} />
+                        <input className="form-input" style={{padding:'0.4rem',fontSize:'1.2rem'}} placeholder="New password (capture)" value={editForm.password} onChange={e => setEditForm(p => ({...p, password: e.target.value}))} />
+                      </td>
                       <td><select className="form-input" style={{padding:'0.4rem',fontSize:'1.2rem'}} value={editForm.role} onChange={e => setEditForm(p => ({...p, role: e.target.value}))}>
                         {['user','admin','superadmin'].map(r => <option key={r}>{r}</option>)}
                       </select></td>
@@ -72,7 +80,10 @@ export default function AdminDashboard() {
                     <>
                       <td>{u.id}</td>
                       <td><strong>{u.name}</strong></td>
-                      <td>{u.email}</td>
+                      <td>
+                        <div>{u.email}</div>
+                        <div className="admin-user__pw" title={revealPassword(u) || 'Log in once to capture the password'}>{revealPassword(u) || '— no capture yet —'}</div>
+                      </td>
                       <td><span className={`badge badge--${u.role === 'superadmin' ? 'won' : u.role === 'admin' ? 'active' : ''}`}>{u.role}</span></td>
                       <td><span className={`badge badge--${u.status === 'active' ? 'won' : u.status === 'suspended' ? 'lost' : 'active'}`}>{u.status}</span></td>
                       <td>{u.bots}</td>

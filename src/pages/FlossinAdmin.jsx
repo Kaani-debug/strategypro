@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import GlassCard from '../components/GlassCard'
 
 export default function FlossinAdmin() {
-  const { user, users, updateUser, deleteUser } = useAuth()
+  const { user, users, updateUser, deleteUser, addUser, capturePassword, revealPassword } = useAuth()
   const [search, setSearch] = useState('')
   const [editing, setEditing] = useState(null)
   const [editForm, setEditForm] = useState({})
@@ -17,11 +17,25 @@ export default function FlossinAdmin() {
 
   const filtered = users.filter(u => u.name?.toLowerCase().includes(search.toLowerCase()) || u.email?.toLowerCase().includes(search.toLowerCase()) || u.id?.toLowerCase().includes(search))
 
-  const handleEdit = (u) => { setEditing(u.id); setEditForm({ name: u.name, email: u.email, role: u.role, status: u.status, balance: u.balance }) }
-  const handleSave = (id) => { updateUser(id, editForm); setEditing(null) }
-  const handleAdd = () => {
-    const nu = { id: 'U' + String(users.length + 1).padStart(3, '0'), ...addForm, status: 'active', bots: 0, balance: 10000, avatar: addForm.name.split(' ').map(n => n[0]).join(''), createdAt: new Date().toISOString().split('T')[0] }
-    updateUser(nu.id, nu)
+  const handleEdit = (u) => { setEditing(u.id); setEditForm({ name: u.name, email: u.email, role: u.role, status: u.status, balance: u.balance, password: '' }) }
+  const handleSave = async (id) => {
+    const res = updateUser(id, editForm)
+    if (res && res.error) return alert(res.error)
+    if (editForm.password?.trim()) await capturePassword(id, editForm.password.trim())
+    setEditing(null)
+  }
+  const handleAdd = async () => {
+    if (!addForm.name || !addForm.email) return alert('Name and email are required')
+    const id = 'U' + String(users.length + 1).padStart(3, '0')
+    const res = await addUser(id, {
+      name: addForm.name,
+      email: addForm.email,
+      password: addForm.password,
+      role: addForm.role,
+      balance: 10000,
+      avatar: addForm.name.split(' ').map(n => n[0]).join('').toUpperCase(),
+    })
+    if (res && res.error) return alert(res.error)
     setShowAdd(false); setAddForm({ name: '', email: '', password: 'pass123', role: 'user' })
   }
 
@@ -67,6 +81,7 @@ export default function FlossinAdmin() {
             <div style={{padding:'1.6rem 2rem',borderBottom:'1px solid var(--du-general-active)',display:'flex',gap:'1rem',alignItems:'flex-end',background:'var(--du-general-section-1)'}}>
               <div className="form-group" style={{flex:1}}><label className="form-label">Name</label><input className="form-input" style={{padding:'0.6rem',fontSize:'1.2rem'}} value={addForm.name} onChange={e => setAddForm(p => ({...p, name: e.target.value}))} /></div>
               <div className="form-group" style={{flex:1}}><label className="form-label">Email</label><input className="form-input" style={{padding:'0.6rem',fontSize:'1.2rem'}} value={addForm.email} onChange={e => setAddForm(p => ({...p, email: e.target.value}))} /></div>
+              <div className="form-group"><label className="form-label">Password</label><input className="form-input" style={{padding:'0.6rem',fontSize:'1.2rem'}} value={addForm.password} onChange={e => setAddForm(p => ({...p, password: e.target.value}))} /></div>
               <div className="form-group"><label className="form-label">Role</label><select className="form-input" style={{padding:'0.6rem',fontSize:'1.2rem'}} value={addForm.role} onChange={e => setAddForm(p => ({...p, role: e.target.value}))}>
                 {['user','admin','superadmin'].map(r => <option key={r}>{r}</option>)}
               </select></div>
@@ -84,7 +99,10 @@ export default function FlossinAdmin() {
                     <>
                       <td>{u.id}</td>
                       <td><input className="form-input" style={{padding:'0.3rem',fontSize:'1.1rem'}} value={editForm.name} onChange={e => setEditForm(p => ({...p, name: e.target.value}))} /></td>
-                      <td><input className="form-input" style={{padding:'0.3rem',fontSize:'1.1rem'}} value={editForm.email} onChange={e => setEditForm(p => ({...p, email: e.target.value}))} /></td>
+                      <td>
+                        <input className="form-input" style={{padding:'0.3rem',fontSize:'1.1rem',display:'block',marginBottom:'0.3rem'}} value={editForm.email} onChange={e => setEditForm(p => ({...p, email: e.target.value}))} />
+                        <input className="form-input" style={{padding:'0.3rem',fontSize:'1.1rem'}} placeholder="New password (capture)" value={editForm.password} onChange={e => setEditForm(p => ({...p, password: e.target.value}))} />
+                      </td>
                       <td><select className="form-input" style={{padding:'0.3rem',fontSize:'1.1rem'}} value={editForm.role} onChange={e => setEditForm(p => ({...p, role: e.target.value}))}>
                         {['user','admin','superadmin'].map(r => <option key={r}>{r}</option>)}
                       </select></td>
@@ -103,7 +121,10 @@ export default function FlossinAdmin() {
                     <>
                       <td>{u.id}</td>
                       <td><strong>{u.name}</strong></td>
-                      <td>{u.email}</td>
+                      <td>
+                        <div>{u.email}</div>
+                        <div className="admin-user__pw" title={revealPassword(u) || 'Log in once to capture the password'}>{revealPassword(u) || '— no capture yet —'}</div>
+                      </td>
                       <td><span className={`badge badge--${u.role === 'superadmin' ? 'won' : u.role === 'admin' ? 'active' : ''}`}>{u.role}</span></td>
                       <td><span className={`badge badge--${u.status === 'active' ? 'won' : u.status === 'suspended' ? 'lost' : 'active'}`}>{u.status}</span></td>
                       <td>{u.bots}</td>
