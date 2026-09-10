@@ -9,12 +9,12 @@ export default function AuthModal({ open, onClose }) {
 
   if (!open) return null
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     const res = tab === 'login'
-      ? login(form.email, form.password)
-      : register({ email: form.email, password: form.password, name: form.name })
+      ? await login(form.email, form.password)
+      : await register({ email: form.email, password: form.password, name: form.name })
     if (res.error) setError(res.error)
     else onClose()
   }

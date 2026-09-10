@@ -48,7 +48,7 @@ export default function DerivHeader() {
           <span>Terminal</span>
         </Link>
         {hasRole(ROLES.ADMIN, ROLES.SUPERADMIN) && (
-          <Link to="/admindata" className="deriv-header__terminal-link" title="Admin Panel">
+          <Link to="/admin/dashboard" className="deriv-header__terminal-link" title="Admin Panel">
             <ShieldCheck size={18} />
             <span>Admin</span>
           </Link>

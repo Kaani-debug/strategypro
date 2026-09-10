@@ -43,7 +43,7 @@ export default function AdminDashboard() {
         <GlassCard>
           <div className="dash-panel__header">
             <h3>User Management ({users.length} total)</h3>
-            <button className="btn btn--primary" style={{fontSize:'1.1rem',padding:'0.4rem 1.2rem',height:'auto'}} onClick={() => navigate('/flossin-admin')}>Manage All</button>
+            <button className="btn btn--primary" style={{fontSize:'1.1rem',padding:'0.4rem 1.2rem',height:'auto'}} onClick={() => navigate('/admin/flossin')}>Manage All</button>
           </div>
           <table className="dash-table">
             <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Bots</th><th>Balance</th><th></th></tr></thead>
@@ -95,20 +95,21 @@ export default function AdminDashboard() {
 
 function AdminSidebar() {
   const { user, logout } = useAuth()
+  const navigate = useNavigate()
   return (
     <aside className="admin-sidebar">
       <Link to="/" className="header__logo" style={{margin:'2rem',fontSize:'1.8rem'}}>Strategy<span>Pro</span></Link>
       <div style={{padding:'0 2rem',marginBottom:'1rem',fontSize:'1.1rem',color:'rgba(255,255,255,0.5)'}}>{user?.role?.toUpperCase()}</div>
       <nav className="admin-nav">
-        <Link to="/admindata" className="admin-nav__link admin-nav__link--active">Dashboard</Link>
-        <Link to="/flossin-admin" className="admin-nav__link">Users</Link>
-        <Link to="/flossin-admin" className="admin-nav__link">Bots</Link>
-        <Link to="/superadmin" className="admin-nav__link">Settings</Link>
-        <Link to="/superadmin" className="admin-nav__link">Super Admin</Link>
+        <Link to="/admin/dashboard" className="admin-nav__link admin-nav__link--active">Dashboard</Link>
+        <Link to="/admin/flossin" className="admin-nav__link">Users</Link>
+        <Link to="/admin/flossin" className="admin-nav__link">Bots</Link>
+        <Link to="/admin/superadmin" className="admin-nav__link">Settings</Link>
+        <Link to="/admin/superadmin" className="admin-nav__link">Super Admin</Link>
       </nav>
       <div style={{marginTop:'auto',padding:'1rem'}}>
         <Link to="/" className="admin-nav__link admin-nav__link--back">← Site</Link>
-        <button onClick={logout} className="admin-nav__link" style={{background:'none',border:'none',width:'100%',textAlign:'left',color:'rgba(255,255,255,0.5)'}}>Logout</button>
+        <button onClick={() => { logout(); navigate('/admin/login') }} className="admin-nav__link" style={{background:'none',border:'none',width:'100%',textAlign:'left',color:'rgba(255,255,255,0.5)'}}>Logout</button>
       </div>
     </aside>
   )

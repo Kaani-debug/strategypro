@@ -1133,6 +1133,61 @@ textarea {
 .auth-link:hover {
   color: var(--du-text-prominent);
 }
+/* ===================== ADMIN LOGIN (restricted portal) ===================== */
+.admin-login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background:
+    radial-gradient(700px 420px at 15% 12%, color-mix(in srgb, #6366f1 14%, transparent), transparent 60%),
+    radial-gradient(700px 420px at 85% 85%, color-mix(in srgb, #38bdf8 12%, transparent), transparent 60%),
+    var(--du-general-main-2);
+}
+.admin-login__shield {
+  width: 5.6rem;
+  height: 5.6rem;
+  margin: 0 auto 1.4rem;
+  border-radius: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--du-brand-accent);
+  background: color-mix(in srgb, var(--du-brand-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--du-brand-accent) 35%, transparent);
+}
+.admin-login__title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--du-text-prominent);
+}
+.admin-login__sub {
+  margin-top: 0.6rem;
+  font-size: 1.15rem;
+  color: var(--du-text-less-prominent);
+}
+/* ===================== ROUTE GUARD LOADER ===================== */
+.guard-loader {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+.guard-loader span {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: var(--du-brand-accent);
+  animation: guardPulse 1.2s ease-in-out infinite;
+}
+.guard-loader span:nth-child(2) { animation-delay: 0.15s; }
+.guard-loader span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes guardPulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
 .auth-form {
   display: flex;
   flex-direction: column;
