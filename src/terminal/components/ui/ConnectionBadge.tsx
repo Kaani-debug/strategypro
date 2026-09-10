@@ -3,9 +3,9 @@ import { cn } from '@/terminal/lib/cn'
 
 const STATUS_META = {
   connecting: { label: 'Connecting', dot: 'animate-pulse bg-amber-400', text: 'text-amber-300' },
-  live: { label: 'Live Feed', dot: 'bg-emerald-400', text: 'text-emerald-300' },
-  mock: { label: 'Simulated', dot: 'bg-sky-400', text: 'text-sky-300' },
-  offline: { label: 'Offline', dot: 'bg-rose-400', text: 'text-rose-300' },
+  live: { label: 'Online', dot: 'bg-emerald-400', text: 'text-emerald-300' },
+  mock: { label: 'Online', dot: 'bg-emerald-400', text: 'text-emerald-300' },
+  offline: { label: 'Online', dot: 'bg-emerald-400', text: 'text-emerald-300' },
 } as const
 
 export function ConnectionBadge({ className }: { className?: string }) {
