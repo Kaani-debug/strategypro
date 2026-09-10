@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useAnalysisStore, ACCOUNTS } from '../state/analysisStore'
-import { CircleDollarSign, LogOut, User, Settings, Bell, CandlestickChart } from 'lucide-react'
+import { CircleDollarSign, LogOut, User, Settings, Bell, CandlestickChart, ShieldCheck } from 'lucide-react'
 import FundAccountModal from './FundAccountModal'
 
 const fmtBal = n => `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
 export default function DerivHeader() {
-  const { user, logout } = useAuth()
+  const { user, logout, hasRole, ROLES } = useAuth()
   const [fundOpen, setFundOpen] = useState(false)
 
   const account = useAnalysisStore(s => s.account)
@@ -47,6 +47,12 @@ export default function DerivHeader() {
           <CandlestickChart size={18} />
           <span>Terminal</span>
         </Link>
+        {hasRole(ROLES.ADMIN, ROLES.SUPERADMIN) && (
+          <Link to="/admindata" className="deriv-header__terminal-link" title="Admin Panel">
+            <ShieldCheck size={18} />
+            <span>Admin</span>
+          </Link>
+        )}
         <button className="deriv-header__icon-btn" title="Notifications"><Bell size={18} /></button>
         <button className="deriv-header__icon-btn" title="Settings"><Settings size={18} /></button>
         <div className="deriv-header__divider" />
