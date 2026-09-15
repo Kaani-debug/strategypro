@@ -37,7 +37,7 @@ export default function AppPage() {
     <div className="app-page">
       <DerivHeader activeTab={activeTab} onTabChange={setActiveTab} />
 
-      <div className="dc-tabs--main__tabs" style={{ '--tab-width': `${100 / TABS.length}%` }}>
+      <div className="dc-tabs--main__tabs">
         {TABS.map(tab => {
           const Icon = tab.icon
           return (

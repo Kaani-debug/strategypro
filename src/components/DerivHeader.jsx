@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useAnalysisStore, ACCOUNTS } from '../state/analysisStore'
-import { CircleDollarSign, LogOut, User, Settings, Bell, CandlestickChart, ShieldCheck } from 'lucide-react'
+import { CircleDollarSign, LogOut, User, Settings, Bell, CandlestickChart, AppWindow, ShieldCheck } from 'lucide-react'
 import FundAccountModal from './FundAccountModal'
 
 const fmtBal = n => `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
@@ -43,6 +43,10 @@ export default function DerivHeader() {
         </div>
       </div>
       <div className="deriv-header__right">
+        <Link to="/app" className="deriv-header__terminal-link" title="Open Workspace">
+          <AppWindow size={18} />
+          <span>Workspace</span>
+        </Link>
         <Link to="/terminal" className="deriv-header__terminal-link" title="Open Terminal">
           <CandlestickChart size={18} />
           <span>Terminal</span>

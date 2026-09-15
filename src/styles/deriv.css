@@ -1754,9 +1754,9 @@ select.form-input {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  flex: 1 0 var(--tab-width, 7.69%);
-  min-width: 0;
-  padding: 1rem 0.4rem 0.9rem;
+  flex: 0 0 auto;
+  min-width: 9.4rem;
+  padding: 1rem 0.8rem 0.9rem;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--du-text-less-prominent);

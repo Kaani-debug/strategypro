@@ -20,6 +20,7 @@ export default function Header() {
               <>
                 {isApp && (
                   <>
+                    <Link to="/app" className="header__link header__link--workspace">Workspace</Link>
                     <Link to="/dashboard" className="header__link">Dashboard</Link>
                     <Link to="/bots" className="header__link">Bots</Link>
                     <Link to="/copy-trading" className="header__link">Copy</Link>
