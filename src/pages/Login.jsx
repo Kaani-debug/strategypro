@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -68,9 +68,6 @@ export default function Login() {
                 {tab === 'login' ? 'User login for regular accounts. Traders only.' : 'Register a regular user account (role: user).'}
               </div>
             </form>
-            <div style={{textAlign:'center',fontSize:'1.1rem',color:'var(--du-text-less-prominent)',marginTop:'2rem'}}>
-              <Link to="/admin/login" className="auth-link">Admin Login</Link>
-            </div>
           </GlassCard>
         </div>
       </main>
