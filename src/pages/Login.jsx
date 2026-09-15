@@ -24,7 +24,7 @@ export default function Login() {
         : await register({ email: form.email, password: form.password, name: form.name })
       if (res.error) return setError(res.error)
       const from = location.state?.from
-      navigate(from && from.startsWith('/dashboard') === false && !from.startsWith('/admin') ? from : '/dashboard', { replace: true })
+      navigate(from && !from.startsWith('/admin') && from !== '/dashboard' && from !== '/login' ? from : '/app', { replace: true })
     } finally {
       setBusy(false)
     }

@@ -26,7 +26,7 @@ export function GuestOnly({ children }) {
     const isAdmin = ['admin', 'superadmin'].includes(user.role)
     const from = location.state?.from
     if (from && isAdmin && from.startsWith('/admin')) return <Navigate to={from} replace />
-    return <Navigate to={isAdmin ? '/admin/dashboard' : '/dashboard'} replace />
+    return <Navigate to={isAdmin ? '/admin/dashboard' : '/app'} replace />
   }
   return children
 }
