@@ -91,7 +91,13 @@ export default function RunControl() {
   const canPause = phase === 'analyzing' || phase === 'validating' || phase === 'collecting' || running
 
   const handleRun = () => {
-    if (!canRun) return
+    if (running) return handleStop()
+    if (!canRun) {
+      if (!useAnalysisStore.getState().connected) return
+      useAnalysisStore.getState().startAnalysis()
+      useAnalysisStore.getState().appendLog({ category: 'info', message: 'Analysis pipeline started — Run unlocks when the analysis completes', code: 'RUN-202' })
+      return
+    }
     const sym = marketById(market)
     const account = useAnalysisStore.getState().account
     startSession({ strategy: strategyById(strategy).label, symbol: sym.id, startBalance: account.balance })
@@ -111,10 +117,10 @@ export default function RunControl() {
     <section className="ws-run">
       <div className="ws-run__controls">
         <button
-          className={`ws-run-btn ${running ? 'ws-run-btn--stop' : ''} ${!canRun ? 'ws-run-btn--locked' : ''}`}
-          onClick={running ? handleStop : handleRun}
-          disabled={!running && !canRun}
-          title={!canRun && !running ? 'Complete an analysis before running a session' : running ? 'Stop session' : 'Start trading session'}
+          className={`ws-run-btn ${running ? 'ws-run-btn--stop' : ''} ${!connected ? 'ws-run-btn--locked' : ''}`}
+          onClick={handleRun}
+          disabled={!connected}
+          title={!connected ? 'Waiting for market stream…' : running ? 'Stop session' : canRun ? 'Start trading session' : 'Run an analysis first — starting the analysis pipeline now'}
         >
           {running ? <Square size={15} /> : <Play size={15} />}
           <span>{running ? 'Stop' : 'Run'}</span>

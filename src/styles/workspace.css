@@ -1612,6 +1612,35 @@
 /* --- Dynamic viewport height (fix mobile URL-bar shrink/overlap) --- */
 .app-page { height: 100vh; height: 100dvh; }
 
+/* On phones the app shell flows naturally so the document scrolls instead
+   of clamping everything inside a fixed-height, overflow-hidden frame. */
+@media (max-width: 720px) {
+  .app-page {
+    height: auto !important;
+    min-height: 100dvh;
+    overflow: visible !important;
+  }
+  .dc-tab-content:has(.analysis-workspace) {
+    overflow: visible !important;
+  }
+  .analysis-workspace {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+  .dc-tab-content {
+    overflow: visible !important;
+  }
+  .ws-body {
+    flex: none !important;
+    overflow: visible !important;
+  }
+  .ws-console {
+    flex: none !important;
+    overflow: visible !important;
+  }
+}
+
 /* Make internal scroll areas momentum-scroll smoothly on touch devices */
 .ws-body,
 .ws-mode-content,
