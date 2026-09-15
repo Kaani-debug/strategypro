@@ -138,7 +138,7 @@ const makeTrade = session => {
   const isEvenOdd = session.strategy === 'Even / Odd'
   const rate = isEvenOdd ? 0.88 : round(rnd(0.6, 1.0), 2)
   const payout = round(session.stake * (1 + rate), 2)
-  const won = Math.random() < 0.85
+  const won = Math.random() < 0.8
   const drift = entrySpot * rnd(0.001, 0.004)
   const exitSpot = round(signal.direction === 'Rise' ? entrySpot + drift : entrySpot - drift)
   const now = Date.now()
